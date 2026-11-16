@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mi Academia de Idiomas</title>
+<meta name="theme-color" content="#3B1F47">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Academia">
+<style>:root{--bg:#FBF5EF;--ink:#2B1B33;--mut:#7D6C84;--card:#fff;--plum:#3B1F47;--plum2:#5A2F66;--rose:#E58BA7;--gold:#C9A24B;--line:#EDE1E4;--ac:#C2548A;--good:#2E9E6B;--bad:#D4505F;--r:20px;--sh:0 8px 24px rgba(59,31,71,.09)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{background:var(--bg);background-image:radial-gradient(900px 420px at 100% -10%,color-mix(in srgb,var(--ac) 16%,transparent),transparent),radial-gradient(700px 420px at -10% 40%,rgba(201,162,75,.12),transparent);background-attachment:fixed;color:var(--ink);font:16px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;min-height:100vh;padding-bottom:92px}
+h1,h2,h3,.serif{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;letter-spacing:.2px;margin:0}
+h2{font-size:1.35rem;margin-bottom:.4rem}h3{font-size:1.1rem}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,var(--plum),var(--plum2));color:#fff;padding:calc(env(safe-area-inset-top) + 10px) 0 10px;box-shadow:0 6px 18px rgba(59,31,71,.25)}
+.top .wrap{display:block}.top .between{flex-wrap:nowrap}
+.brand{font-family:Georgia,serif;font-size:1.15rem;letter-spacing:.4px;white-space:nowrap}.brand b{color:var(--gold)}
+.pills{display:flex;gap:6px;align-items:center}
+.pill{background:rgba(255,255,255,.14);border-radius:99px;padding:3px 10px;font-size:.88rem;white-space:nowrap}
+.pill b{font-weight:700}
+.iconbtn{background:rgba(255,255,255,.14);border-radius:99px;width:32px;height:32px;display:grid;place-items:center}
+.langs{display:flex;gap:8px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+.langs::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border-radius:99px;padding:6px 14px;background:rgba(255,255,255,.12);color:#fff;font-size:.92rem;border:1.5px solid transparent}
+.chip.on{background:#fff;color:var(--plum);font-weight:700}
+
+/* cards & basics */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin:14px 0;border:1px solid var(--line)}
+.card.soft{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+.muted{color:var(--mut)}.small{font-size:.86rem}.center{text-align:center}
+.btn{display:block;width:100%;background:var(--ac);color:#fff;border-radius:16px;padding:13px 16px;font-weight:700;text-align:center;box-shadow:0 6px 0 color-mix(in srgb,var(--ac) 65%,#000);margin:14px 0 8px;transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 color-mix(in srgb,var(--ac) 65%,#000)}
+.btn.alt{background:#fff;color:var(--ac);border:2px solid var(--ac);box-shadow:none}
+.btn.ghost{background:transparent;color:var(--mut);box-shadow:none;border:1.5px dashed var(--line)}
+.btn.gold{background:var(--gold);box-shadow:0 6px 0 #9c7d34}
+.btn[disabled]{opacity:.5}
+.row{display:flex;gap:10px;align-items:center}.row>*{flex:1}
+.between{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tag{display:inline-block;border-radius:99px;padding:2px 10px;font-size:.78rem;background:color-mix(in srgb,var(--ac) 14%,#fff);color:var(--ac);font-weight:700}
+input[type=text],textarea,select{width:100%;font:inherit;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:#fff;color:var(--ink);outline:none}
+input:focus,textarea:focus{border-color:var(--ac)}
+textarea{min-height:120px;resize:vertical}
+
+/* hero (path) */
+.hero{display:flex;gap:14px;align-items:center}
+.ring{--p:0;width:74px;height:74px;border-radius:50%;background:conic-gradient(var(--gold) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;flex:0 0 auto}
+.ring span{width:58px;height:58px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:800;font-size:.95rem}
+.bubble{background:color-mix(in srgb,var(--ac) 9%,#fff);border-radius:16px 16px 16px 4px;padding:10px 12px;font-size:.92rem}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--ac);display:grid;place-items:center;font-size:1.3rem;flex:0 0 auto;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+
+.lvtabs{display:flex;gap:8px;margin:16px 0 0}
+.lvtab{flex:1;padding:10px 4px;border-radius:14px;background:#fff;border:1.5px solid var(--line);text-align:center;font-weight:700;font-size:.95rem}
+.lvtab small{display:block;font-weight:500;color:var(--mut);font-size:.7rem}
+.lvtab.on{background:var(--ac);color:#fff;border-color:var(--ac)}.lvtab.on small{color:#ffffffcc}
+
+.path{display:flex;flex-direction:column;gap:6px;margin:18px 0}
+.node{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:12px 14px;box-shadow:var(--sh);width:92%;text-align:left}
+.node:nth-child(even){align-self:flex-end}
+.node .bub{--p:0;width:58px;height:58px;border-radius:50%;background:conic-gradient(var(--ac) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;flex:0 0 auto}
+.node .bub span{width:46px;height:46px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:1.4rem}
+.node .t{font-weight:700;line-height:1.25}
+.node.done .bub span{background:color-mix(in srgb,var(--gold) 28%,#fff)}
+
+/* unit acts */
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.act{background:#fff;border-radius:20px;border:1px solid var(--line);box-shadow:var(--sh);padding:16px 12px;text-align:center;position:relative}
+.act .ic{font-size:1.9rem}.act .nm{font-weight:700;margin-top:2px}.act small{display:block;color:var(--mut)}
+.act.ok{background:color-mix(in srgb,var(--good) 8%,#fff);border-color:color-mix(in srgb,var(--good) 40%,#fff)}
+.act .ck{position:absolute;top:8px;right:10px;color:var(--good);font-weight:900}
+
+/* session */
+.sbar{display:flex;align-items:center;gap:12px;margin:16px 0}
+.prog{flex:1;height:12px;border-radius:99px;background:var(--line);overflow:hidden}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--gold));border-radius:99px;transition:width .3s}
+.x{font-size:1.2rem;color:var(--mut);padding:4px 8px}
+.q{font-size:1.3rem;margin:14px 0;line-height:1.35}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:16px;padding:13px 14px;margin:9px 0;font-weight:600;box-shadow:0 3px 0 var(--line)}
+.opt:active{transform:translateY(2px)}
+.opt.good{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,#fff);box-shadow:0 3px 0 var(--good)}
+.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,#fff);box-shadow:0 3px 0 var(--bad)}
+.fb{border-radius:16px;padding:12px 14px;margin:12px 0;font-size:.95rem}
+.fb.good{background:color-mix(in srgb,var(--good) 14%,#fff);color:#17623f}.fb.bad{background:color-mix(in srgb,var(--bad) 12%,#fff);color:#8e2634}
+.say{display:inline-flex;align-items:center;gap:6px;background:color-mix(in srgb,var(--ac) 12%,#fff);color:var(--ac);border-radius:99px;padding:8px 14px;font-weight:700;margin:4px 6px 4px 0}
+.say.big{padding:14px 22px;font-size:1.05rem}
+.flash{text-align:center;padding:24px 14px}
+.flash .w{font-size:2.3rem;font-family:Georgia,'Apple SD Gothic Neo','Noto Sans KR',serif;margin:6px 0;line-height:1.2;color:var(--plum)}
+.flash .pr{color:var(--ac);font-weight:700}
+.flash .es{font-size:1.2rem;font-weight:700;margin-top:8px}
+.ex{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);text-align:left}
+.read{white-space:pre-line;font-size:1.08rem;line-height:1.7}
+.grammar h3{margin:4px 0 6px}.grammar ul{padding-left:20px}.grammar li{margin:4px 0}
+.wc{font-size:.85rem;color:var(--mut);text-align:right}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip2{border-radius:99px;padding:4px 10px;background:#f3eaee;font-size:.85rem}
+.chip2.hit{background:color-mix(in srgb,var(--good) 20%,#fff);color:#17623f;font-weight:700}
+.done .big{font-size:3.2rem}
+.spark{font-size:2rem;animation:pop .8s ease both}
+@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.25)}100%{transform:scale(1);opacity:1}}
+.mic{width:84px;height:84px;border-radius:50%;background:var(--ac);color:#fff;font-size:2rem;display:grid;place-items:center;margin:10px auto;box-shadow:0 8px 0 color-mix(in srgb,var(--ac) 60%,#000)}
+.mic.rec{animation:pulse 1s infinite;background:var(--bad)}
+@keyframes pulse{50%{transform:scale(1.08)}}
+
+/* lists */
+.song{display:flex;gap:12px;align-items:center;text-align:left;width:100%}
+.song .ic{font-size:1.6rem}
+.lyr{padding:10px 0;border-bottom:1px solid var(--line)}
+.lyr .t{font-size:1.1rem;line-height:1.5}.lyr .tr{color:var(--mut);font-size:.92rem;margin-top:2px}
+.lyr .w{cursor:pointer;border-radius:6px;padding:0 1px}.lyr .w:active{background:color-mix(in srgb,var(--ac) 20%,#fff)}
+.cloze{display:inline-block;min-width:70px;border-bottom:2px solid var(--ac);text-align:center;color:var(--ac)}
+.tabs{display:flex;gap:6px;background:#f1e7ea;border-radius:16px;padding:4px;margin:12px 0}
+.tabs button{flex:1;padding:9px 4px;border-radius:12px;font-weight:700;font-size:.9rem;color:var(--mut)}
+.tabs button.on{background:#fff;color:var(--ac);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;border-radius:24px 24px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.2);padding:18px 18px calc(env(safe-area-inset-bottom) + 20px);max-width:600px;margin:0 auto}
+.scrim{position:fixed;inset:0;background:rgba(40,20,50,.35);z-index:40}
+
+/* league / profile */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 6px;text-align:center;box-shadow:var(--sh)}
+.stat b{display:block;font-size:1.4rem;font-family:Georgia,serif}.stat span{font-size:.75rem;color:var(--mut)}
+.lrow{display:flex;align-items:center;gap:10px;padding:9px 6px;border-radius:14px}
+.lrow.me{background:color-mix(in srgb,var(--gold) 22%,#fff);font-weight:800}
+.lrow .rk{width:26px;text-align:center;font-weight:800;color:var(--mut)}
+.lrow .nm{flex:1}
+.heat{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.heat i{aspect-ratio:1;border-radius:8px;background:var(--line);display:block}
+.heat i.l1{background:color-mix(in srgb,var(--ac) 30%,#fff)}.heat i.l2{background:color-mix(in srgb,var(--ac) 60%,#fff)}.heat i.l3{background:var(--ac)}
+.heat i.t{outline:2px solid var(--gold)}
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.badge{text-align:center;font-size:.78rem;padding:10px 4px;border-radius:16px;background:#fff;border:1px solid var(--line)}
+.badge .e{font-size:1.8rem;display:block}.badge.off{opacity:.35;filter:grayscale(1)}
+
+/* nav & toast */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);padding:6px 6px calc(env(safe-area-inset-bottom) + 6px);display:flex;box-shadow:0 -6px 20px rgba(59,31,71,.08)}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:0;font-size:.7rem;color:var(--mut);padding:4px 0;position:relative}
+.nav button .e{font-size:1.35rem;filter:grayscale(.6)}
+.nav button.on{color:var(--ac);font-weight:700}.nav button.on .e{filter:none}
+.nav .dot{position:absolute;top:0;right:22%;background:var(--bad);color:#fff;font-size:.62rem;border-radius:99px;padding:0 5px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:var(--plum);color:#fff;padding:10px 18px;border-radius:99px;z-index:60;opacity:0;transition:.25s;pointer-events:none;font-size:.92rem;max-width:90%;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.back{color:var(--mut);padding:10px 0;display:inline-block}
+hr{border:0;border-top:1px solid var(--line);margin:14px 0}
+a{color:var(--ac)}
+
+.lyr.on{background:color-mix(in srgb,var(--gold) 28%,#fff);border-radius:12px;padding-left:8px}
+.cz{border:2px solid var(--ac);outline:none}
+.row .say{white-space:nowrap;padding:9px 6px;font-size:.84rem}
+.chip.on{scroll-margin:0 40px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="between"><div class="brand">✦ Mi <b>Academia</b></div><div class="pills" id="pills"></div></div>
+  <div class="langs" id="langs"></div>
+</div></header>
+<main class="wrap" id="app"></main>
+<nav class="nav" id="nav"></nav>
+<div class="toast" id="toast"></div>
+<div id="layer"></div>
+<script>window.C={};
+window.U=function(lang,lvl,title,o){
+ const L=(C[lang]=C[lang]||{});const arr=(L[lvl]=L[lvl]||[]);
+ const id=lang+'-'+lvl+'-'+(arr.length+1);
+ const v=o.v.trim().split('\n').map(l=>{const p=l.trim().split('|');return{w:p[0],es:p[1],ex:p[2]||'',exEs:p[3]||'',pr:p[4]||''}});
+ const l=(o.l||'').trim()?o.l.trim().split('\n').map(x=>{const p=x.trim().split('|');return{t:p[0],es:p[1]||''}}):[];
+ arr.push({id,lang,lvl,title,emoji:o.e||'✦',v,l,g:o.g,r:o.r,w:o.w});
+};
+</script>
+<script>/* INGLÉS A1–B2 */
+U('en','a1','Hello! Saludos y presentaciones',{e:'👋',
+v:`Hello|Hola|Hello, my name is Ana.|Hola, mi nombre es Ana.
+Goodbye|Adiós|Goodbye, see you tomorrow!|¡Adiós, hasta mañana!
+Please|Por favor|A coffee, please.|Un café, por favor.
+Thank you|Gracias|Thank you very much.|Muchas gracias.
+Sorry|Perdón / lo siento|Sorry, I am late.|Perdón, llego tarde.
+Name|Nombre|What is your name?|¿Cómo te llamas?
+Nice to meet you|Mucho gusto|Nice to meet you, Tom.|Mucho gusto, Tom.
+How are you?|¿Cómo estás?|Hi! How are you today?|¡Hola! ¿Cómo estás hoy?`,
+l:`Good morning, teacher.|Buenos días, profesor.
+Where are you from?|¿De dónde eres?
+I am fine, thanks.|Estoy bien, gracias.`,
+g:{t:'El verbo «to be» (ser / estar)',h:`<p>En inglés el verbo <b>to be</b> sirve para <i>ser</i> y <i>estar</i>. Siempre necesitas decir el sujeto.</p><ul><li><b>I am</b> → yo soy / estoy (I'm)</li><li><b>You are</b> → tú eres / ustedes son (you're)</li><li><b>He / She / It is</b> → él / ella / eso es (he's, she's, it's)</li><li><b>We / They are</b> → nosotros / ellos son (we're, they're)</li></ul><p><b>Negativo:</b> agrega <b>not</b> → <i>I am not, She isn't, They aren't</i>.</p><p><b>Pregunta:</b> invierte el orden → <i>Are you ready?</i></p>`,
+x:[["I ___ from Colombia.",["am","is","are"],0,"Con «I» usamos siempre «am»."],
+["She ___ my friend.",["am","is","are"],1,"She / he / it → is."],
+["We ___ students.",["am","is","are"],2,"We / you / they → are."],
+["___ you tired?",["Am","Is","Are"],2,"En preguntas: «Are you…?»"],
+["He ___ at home. (negativo)",["isn't","aren't","am not"],0,"He is not = he isn't."]]},
+r:{t:'Meet Laura',s:`Hi! My name is Laura. I am from Bucaramanga, Colombia. I am 21 years old and I am a student. I like English and music.`,es:`¡Hola! Me llamo Laura. Soy de Bucaramanga, Colombia. Tengo 21 años y soy estudiante. Me gustan el inglés y la música.`,q:[["Where is Laura from?",["Medellín","Bucaramanga","Bogotá"],1],["How old is Laura?",["19","21","25"],1]]},
+w:{p:'Preséntate: tu nombre, de dónde eres, tu edad y qué te gusta (mínimo 4 frases).',m:`Hi! My name is Ana. I am from Bogotá. I am 20 years old. I like music and movies.`,k:["My name is","I am from","I am","I like"],n:12}});
+
+U('en','a1','Colores y objetos',{e:'🎨',
+v:`Red|Rojo|The bag is red.|El bolso es rojo.
+Blue|Azul|I have a blue phone.|Tengo un teléfono azul.
+Green|Verde|The apple is green.|La manzana es verde.
+Book|Libro|The book is on the table.|El libro está sobre la mesa.
+Phone|Teléfono|My phone is new.|Mi teléfono es nuevo.
+Bag|Bolso / mochila|She has a small bag.|Ella tiene un bolso pequeño.
+Table|Mesa|The table is big.|La mesa es grande.
+Chair|Silla|Sit on the chair, please.|Siéntate en la silla, por favor.`,
+l:`I have three red pens.|Tengo tres bolígrafos rojos.
+There are five chairs.|Hay cinco sillas.`,
+g:{t:'Artículos a / an / the y plurales',h:`<p><b>a</b> + sonido de consonante (a book). <b>an</b> + sonido de vocal (an apple). <b>the</b> cuando es algo específico o único (the sun).</p><p><b>Plural:</b> casi siempre agrega <b>-s</b> → book → books. Si termina en s, x, ch, sh agrega <b>-es</b> → box → boxes.</p><p>Para decir «hay»: <b>There is</b> (uno) / <b>There are</b> (varios).</p>`,
+x:[["I have ___ apple.",["a","an","the"],1,"«apple» empieza con sonido vocal → an."],
+["She has ___ book.",["a","an","two"],0,"«book» empieza con consonante → a."],
+["I have two ___.",["book","books","a books"],1,"Plural → agrega -s."],
+["___ sun is hot today.",["A","An","The"],2,"Hay un solo sol: usamos the."],
+["This is ___ umbrella.",["a","an","the"],1,"«umbrella» empieza con sonido vocal → an."]]},
+r:{t:'My room',s:`My room is small. There is a blue bed and a white table. On the table there are two books and a green lamp. I like my room.`,es:`Mi cuarto es pequeño. Hay una cama azul y una mesa blanca. Sobre la mesa hay dos libros y una lámpara verde. Me gusta mi cuarto.`,q:[["What color is the bed?",["Blue","Green","White"],0],["How many books are there?",["One","Two","Three"],1]]},
+w:{p:'Describe tu cuarto o tu bolso: objetos y colores (mínimo 4 frases).',m:`My room is small. There is a white bed and a brown table. On the table there are three books and a red lamp.`,k:["There is","There are","I have"],n:12}});
+
+U('en','a1','Mi rutina diaria',{e:'⏰',
+v:`Wake up|Despertarse|I wake up at six.|Me despierto a las seis.
+Have breakfast|Desayunar|She has breakfast at seven.|Ella desayuna a las siete.
+Go to class|Ir a clase|We go to class every day.|Vamos a clase todos los días.
+Study|Estudiar|I study English at night.|Estudio inglés por la noche.
+Have lunch|Almorzar|They have lunch at noon.|Ellos almuerzan al mediodía.
+Go home|Ir a casa|He goes home at five.|Él va a casa a las cinco.
+Watch TV|Ver televisión|I watch TV after dinner.|Veo televisión después de la cena.
+Go to bed|Ir a dormir|I go to bed at eleven.|Me acuesto a las once.`,
+l:`What time is it?|¿Qué hora es?
+She studies every night.|Ella estudia todas las noches.`,
+g:{t:'Presente simple: hábitos y rutinas',h:`<p>Usamos el <b>presente simple</b> para rutinas y hechos: <i>I study every day</i>.</p><ul><li>I / you / we / they + verbo → <i>I work</i></li><li>He / she / it + verbo<b>+s</b> → <i>She works</i> (study → studies, go → goes, have → has)</li></ul><p><b>Negativo:</b> don't (I, you, we, they) / doesn't (he, she, it) + verbo base.</p><p><b>Pregunta:</b> Do / Does + sujeto + verbo base → <i>Does she work?</i></p>`,
+x:[["She ___ English every day.",["study","studies","studys"],1,"She + verbo con -s; study → studies."],
+["They ___ lunch at noon.",["has","have","haves"],1,"They → have."],
+["He ___ to class by bus.",["go","goes","going"],1,"go → goes con he/she/it."],
+["I ___ like coffee. (negativo)",["don't","doesn't","not"],0,"I + don't."],
+["___ she work on Saturdays?",["Do","Does","Is"],1,"Con she usamos Does."]]},
+r:{t:'A normal day',s:`Every day I wake up at six. I have breakfast at seven and I go to the university. I study until two. Then I have lunch with my friends. At night I watch TV and I go to bed at eleven.`,es:`Todos los días me despierto a las seis. Desayuno a las siete y voy a la universidad. Estudio hasta las dos. Luego almuerzo con mis amigos. En la noche veo televisión y me acuesto a las once.`,q:[["What time does the speaker wake up?",["Five","Six","Seven"],1],["Who does the speaker have lunch with?",["Family","Friends","A teacher"],1]]},
+w:{p:'Cuenta tu rutina de un día normal (mínimo 5 frases).',m:`I wake up at six. I have breakfast at seven. I go to class at eight. I study in the afternoon. I go to bed at eleven.`,k:["I wake up","I go to","I study","every day"],n:20}});
+
+/* A2 */
+U('en','a2','En el restaurante',{e:'🍽️',
+v:`Menu|Menú|Can I see the menu, please?|¿Puedo ver el menú, por favor?
+Order|Pedir / ordenar|I would like to order now.|Quisiera pedir ahora.
+Bill|Cuenta|Could we have the bill, please?|¿Nos trae la cuenta, por favor?
+Delicious|Delicioso|This soup is delicious.|Esta sopa está deliciosa.
+Hungry|Con hambre|I am very hungry.|Tengo mucha hambre.
+Thirsty|Con sed|Are you thirsty?|¿Tienes sed?
+Would like|Quisiera / me gustaría|I would like a salad.|Quisiera una ensalada.
+Tip|Propina|The service was great, so I left a tip.|El servicio fue excelente, así que dejé propina.`,
+l:`Is there any milk?|¿Hay algo de leche?
+Could I have some water?|¿Podría tomar un poco de agua?`,
+g:{t:'Pedir con educación: would like, could, some / any',h:`<p>Para pedir con cortesía: <b>I would like…</b> (quisiera), <b>Could I have…?</b> (¿podría tomar…?).</p><p><b>some</b> → frases afirmativas (<i>I have some water</i>). <b>any</b> → negativas y preguntas (<i>I don't have any bread. Is there any milk?</i>).</p><p>Con sustantivos contables en plural y con los incontables (water, milk, rice) usamos some / any.</p>`,
+x:[["I ___ like a coffee, please.",["will","would","am"],1,"«I would like» = quisiera."],
+["There is ___ milk in the fridge.",["some","any","a"],0,"Afirmativa → some."],
+["We don't have ___ bread.",["some","any","an"],1,"Negativa → any."],
+["___ I have the menu, please?",["Could","Are","Do"],0,"«Could I…?» = petición educada."],
+["Is there ___ sugar?",["some","any","a"],1,"En preguntas usamos any."]]},
+r:{t:'At the restaurant',s:`Waiter: Good evening! Are you ready to order?
+Maria: Yes, I would like the chicken soup, please.
+Waiter: Anything to drink?
+Maria: Some water, please.
+Waiter: Of course.
+Maria: Thank you. The soup is delicious!`,es:`Mesero: ¡Buenas noches! ¿Están listos para pedir?
+María: Sí, quisiera la sopa de pollo, por favor.
+Mesero: ¿Algo de beber?
+María: Un poco de agua, por favor.
+Mesero: Por supuesto.
+María: Gracias. ¡La sopa está deliciosa!`,q:[["What does Maria order?",["Fish","Chicken soup","Salad"],1],["What does she drink?",["Water","Juice","Coffee"],0]]},
+w:{p:'Escribe un diálogo corto pidiendo comida en un restaurante (mínimo 30 palabras).',m:`Good evening. I would like a pizza, please. Could I have some water? Thank you. Can we have the bill, please?`,k:["I would like","Could I","some","please"],n:30}});
+
+U('en','a2','Viajes y pasado simple',{e:'✈️',
+v:`Ticket|Boleto / tiquete|I bought a ticket online.|Compré un boleto en línea.
+Airport|Aeropuerto|We arrived at the airport early.|Llegamos temprano al aeropuerto.
+Luggage|Equipaje|My luggage was heavy.|Mi equipaje estaba pesado.
+Trip|Viaje|Our trip was amazing.|Nuestro viaje fue increíble.
+Hotel|Hotel|The hotel was near the beach.|El hotel estaba cerca de la playa.
+Arrive|Llegar|The bus arrived at nine.|El bus llegó a las nueve.
+Leave|Salir / irse|We left the hotel at noon.|Salimos del hotel al mediodía.
+Visit|Visitar|Last year I visited Cartagena.|El año pasado visité Cartagena.`,
+l:`I went to Spain in 2023.|Fui a España en 2023.
+Did you enjoy the trip?|¿Disfrutaste el viaje?`,
+g:{t:'Pasado simple: regulares e irregulares',h:`<p>Para hablar del pasado terminado:</p><ul><li><b>Regulares:</b> verbo + <b>-ed</b> → visit → visited, arrive → arrived.</li><li><b>Irregulares</b> (hay que memorizar): go → <b>went</b>, see → <b>saw</b>, have → <b>had</b>, buy → <b>bought</b>, eat → <b>ate</b>.</li></ul><p><b>Negativo:</b> didn't + verbo base → <i>I didn't go</i>. <b>Pregunta:</b> Did + sujeto + verbo base → <i>Did you go?</i></p>`,
+x:[["Yesterday I ___ my friends.",["visit","visited","visiting"],1,"Pasado regular → -ed."],
+["We ___ to Cartagena last summer.",["go","goed","went"],2,"go → went (irregular)."],
+["She ___ a ticket online.",["buyed","bought","buy"],1,"buy → bought."],
+["I ___ see the museum. (negativo)",["didn't","don't","wasn't"],0,"didn't + verbo base."],
+["___ you enjoy the trip?",["Did","Do","Were"],0,"Pregunta en pasado → Did."]]},
+r:{t:'Last summer',s:`Last summer I traveled to Cartagena with my family. We arrived at the airport at six in the morning. The hotel was near the beach. We visited the old city and ate fresh fish. It was an amazing trip!`,es:`El verano pasado viajé a Cartagena con mi familia. Llegamos al aeropuerto a las seis de la mañana. El hotel estaba cerca de la playa. Visitamos la ciudad vieja y comimos pescado fresco. ¡Fue un viaje increíble!`,q:[["When did they arrive at the airport?",["At six in the morning","At night","At noon"],0],["What did they eat?",["Fresh fish","Pizza","Soup"],0]]},
+w:{p:'Cuenta tu último viaje o fin de semana en pasado (mínimo 5 frases).',m:`Last weekend I went to my grandmother's house. We cooked lunch and watched a movie. I ate a lot! It was a great day.`,k:["I went","We visited","I saw","It was"],n:30}});
+
+U('en','a2','Planes y futuro',{e:'📅',
+v:`Plan|Plan|What is your plan for tomorrow?|¿Cuál es tu plan para mañana?
+Weekend|Fin de semana|I am free this weekend.|Estoy libre este fin de semana.
+Party|Fiesta|We are going to a party tonight.|Vamos a una fiesta esta noche.
+Meet|Encontrarse / conocer|Let's meet at the café.|Encontrémonos en el café.
+Cinema|Cine|They are going to the cinema.|Ellos van al cine.
+Maybe|Quizás|Maybe I will call you later.|Quizás te llame más tarde.
+Tomorrow|Mañana (día siguiente)|I will study tomorrow.|Estudiaré mañana.
+Next week|La próxima semana|I am traveling next week.|Viajo la próxima semana.`,
+l:`Are you free on Saturday?|¿Estás libre el sábado?
+I am going to cook dinner.|Voy a cocinar la cena.`,
+g:{t:'Futuro: going to, will y presente continuo',h:`<ul><li><b>be going to + verbo:</b> planes ya decididos o evidencias → <i>I'm going to visit my grandma.</i></li><li><b>will + verbo:</b> decisiones espontáneas, promesas, predicciones → <i>I'll help you!</i></li><li><b>Presente continuo:</b> citas ya organizadas → <i>I'm meeting Ana at 5.</i></li></ul>`,
+x:[["I ___ visit my grandma tomorrow. (plan decidido)",["am going to","will","am"],0,"Plan decidido → going to."],
+["The phone is ringing. I ___ answer it!",["am going to","will","am answering"],1,"Decisión espontánea → will."],
+["Look at those clouds! It ___ rain.",["will","is going to","is"],1,"Evidencia presente → going to."],
+["She ___ for Bogotá tomorrow at 8. (ya tiene el tiquete)",["leaves","is leaving","will left"],1,"Cita organizada → presente continuo."],
+["They ___ watch a movie tonight.",["are going to","is going to","going to"],0,"They → are going to."]]},
+r:{t:'My weekend plans',s:`This weekend I am going to relax. On Saturday I am meeting my friends at the cinema. We are going to watch a comedy. On Sunday I will probably visit my grandmother. Maybe we will cook together.`,es:`Este fin de semana voy a descansar. El sábado me encuentro con mis amigos en el cine. Vamos a ver una comedia. El domingo probablemente visite a mi abuela. Quizás cocinemos juntas.`,q:[["What are they going to watch?",["A comedy","A horror movie","A drama"],0],["Who will the speaker visit on Sunday?",["Her grandmother","Her teacher","Her cousin"],0]]},
+w:{p:'Escribe tus planes para este fin de semana (mínimo 5 frases).',m:`This weekend I am going to study English. On Saturday I am meeting my friends. On Sunday I will rest. Maybe I will watch a movie.`,k:["I am going to","I will","Maybe","This weekend"],n:30}});
+
+/* B1 */
+U('en','b1','Experiencias de vida',{e:'🌍',
+v:`Experience|Experiencia|I have a lot of experience in sales.|Tengo mucha experiencia en ventas.
+Ever|Alguna vez|Have you ever been abroad?|¿Has estado alguna vez en el extranjero?
+Never|Nunca|I have never tried sushi.|Nunca he probado el sushi.
+Already|Ya|She has already finished the report.|Ella ya terminó el informe.
+Yet|Todavía / aún|I haven't called him yet.|Todavía no lo he llamado.
+Achieve|Lograr|He has achieved all his goals.|Él ha logrado todas sus metas.
+Try|Intentar / probar|Have you tried Korean food?|¿Has probado la comida coreana?
+Abroad|En el extranjero|She has lived abroad for two years.|Ella ha vivido en el extranjero dos años.`,
+l:`I have never been to Europe.|Nunca he estado en Europa.
+How long have you lived here?|¿Cuánto tiempo has vivido aquí?`,
+g:{t:'Presente perfecto: have / has + participio',h:`<p>Une el pasado con el presente: experiencias de vida y resultados actuales.</p><ul><li><b>have / has + participio</b> → <i>I have visited Spain.</i></li><li><b>ever / never</b> (experiencias), <b>already</b> (ya, afirmativa), <b>yet</b> (todavía, negativas y preguntas).</li><li><b>for</b> + duración (for two years) / <b>since</b> + punto de inicio (since 2019).</li></ul><p>No se usa con tiempo terminado (yesterday, last year): ahí va pasado simple.</p>`,
+x:[["She has already ___ the report.",["finish","finished","finishing"],1,"have/has + participio: finished."],
+["Have you ___ been to Paris?",["ever","yet","already"],0,"ever = alguna vez."],
+["I haven't called him ___.",["yet","already","ever"],0,"yet en negativas."],
+["They have lived here ___ 2019.",["for","since","during"],1,"since + fecha de inicio."],
+["He ___ lived abroad for two years.",["have","has","is"],1,"He → has."]]},
+r:{t:'Planning a trip',s:`I have traveled to five countries and I have tried many different foods. I have never been to Asia, but I have already planned a trip to Japan. I haven't bought the tickets yet, but I have saved some money.`,es:`He viajado a cinco países y he probado muchas comidas distintas. Nunca he estado en Asia, pero ya he planeado un viaje a Japón. Todavía no he comprado los tiquetes, pero he ahorrado algo de dinero.`,q:[["Has the speaker been to Asia?",["Yes, twice","No, never","Yes, always"],1],["What hasn't the speaker done yet?",["Bought the tickets","Planned the trip","Saved money"],0]]},
+w:{p:'Escribe 3 cosas que has hecho y 2 que nunca has hecho (mínimo 5 frases).',m:`I have visited Cartagena and I have learned some English. I have tried Italian food. I have never traveled by plane. I have never seen the snow.`,k:["I have","I have never","already","yet"],n:45}});
+
+U('en','b1','Trabajo y condicionales',{e:'💼',
+v:`Deadline|Fecha límite|We need to meet the deadline.|Debemos cumplir la fecha límite.
+Colleague|Colega|My colleague helped me.|Mi colega me ayudó.
+Salary|Salario|The salary is good.|El salario es bueno.
+Apply (for)|Postularse|I want to apply for this job.|Quiero postularme a este empleo.
+Interview|Entrevista|The interview is on Monday.|La entrevista es el lunes.
+Skill|Habilidad|Communication is an important skill.|La comunicación es una habilidad importante.
+Degree|Título universitario|She has a degree in business.|Ella tiene un título en negocios.
+Schedule|Horario|My schedule is very busy.|Mi horario está muy ocupado.`,
+l:`I have an interview tomorrow.|Tengo una entrevista mañana.
+If I get the job, I will celebrate.|Si consigo el trabajo, lo celebraré.`,
+g:{t:'Condicionales cero y primero',h:`<ul><li><b>Cero (hechos):</b> If + presente, presente → <i>If you heat ice, it melts.</i></li><li><b>Primero (futuro posible):</b> If + presente, <b>will</b> + verbo → <i>If I study, I will pass.</i></li></ul><p>Nunca uses «will» dentro del bloque con <i>if</i>. <b>Unless</b> = if not: <i>I won't go unless you come.</i></p>`,
+x:[["If I ___ hard, I will pass the exam.",["study","will study","studied"],0,"Después de if → presente."],
+["If it rains, we ___ at home.",["stay","will stay","stayed"],1,"Resultado → will + verbo."],
+["If you heat ice, it ___.",["melts","will melted","melting"],0,"Hecho general → presente."],
+["I won't go ___ you come with me.",["if","unless","when"],1,"unless = a menos que."],
+["If she ___ the job, she will move to Bogotá.",["gets","will get","got"],0,"If + presente."]]},
+r:{t:'The interview',s:`Last month I applied for a job at an international company. The interview was in English, so I practiced every day. If I get the job, I will work with colleagues from different countries. If I don't get it, I will keep trying, because every interview is a good experience.`,es:`El mes pasado me postulé a un empleo en una empresa internacional. La entrevista fue en inglés, así que practiqué todos los días. Si consigo el trabajo, trabajaré con colegas de distintos países. Si no lo consigo, seguiré intentando, porque cada entrevista es una buena experiencia.`,q:[["Why did the speaker practice English?",["The interview was in English","For a trip","For an exam"],0],["What will happen if the speaker doesn't get the job?",["Will keep trying","Will stop","Will travel"],0]]},
+w:{p:'Escribe 5 frases con «If…» sobre tu futuro profesional.',m:`If I finish my degree, I will look for a job. If I speak English well, I will work in an international company. If I save money, I will travel.`,k:["If I","I will","unless"],n:45}});
+
+U('en','b1','Opiniones y comparaciones',{e:'💬',
+v:`Opinion|Opinión|In my opinion, it is a good idea.|En mi opinión, es una buena idea.
+Agree|Estar de acuerdo|I agree with you.|Estoy de acuerdo contigo.
+Disagree|No estar de acuerdo|I disagree with that point.|No estoy de acuerdo con ese punto.
+Advantage|Ventaja|The main advantage is the price.|La principal ventaja es el precio.
+Disadvantage|Desventaja|One disadvantage is the traffic.|Una desventaja es el tráfico.
+However|Sin embargo|It is cheap; however, it is slow.|Es barato; sin embargo, es lento.
+Although|Aunque|Although it was hard, I finished.|Aunque fue difícil, terminé.
+Compared to|En comparación con|Compared to Bogotá, it is calmer.|En comparación con Bogotá, es más tranquilo.`,
+l:`What do you think about it?|¿Qué piensas de eso?
+I see your point, but I disagree.|Entiendo tu punto, pero no estoy de acuerdo.`,
+g:{t:'Comparativos, superlativos y should',h:`<ul><li><b>Corto:</b> -er than / the -est → <i>taller than, the tallest</i> (hot → hotter, big → bigger).</li><li><b>Largo:</b> more… than / the most… → <i>more interesting than, the most interesting</i>.</li><li><b>Irregulares:</b> good → better → the best; bad → worse → the worst.</li><li><b>should</b> = consejo → <i>You should rest.</i></li></ul>`,
+x:[["This book is ___ than that one.",["interesting","more interesting","most interesting"],1,"Adjetivo largo → more…than."],
+["She is the ___ student in the class.",["smarter","smartest","most smart"],1,"Superlativo corto → the -est."],
+["Cali is ___ than Bucaramanga. (hot)",["hotter","more hot","hottest"],0,"hot → hotter (se duplica la t)."],
+["You ___ see a doctor. (consejo)",["should","must to","shoulds"],0,"should + verbo base."],
+["It is ___ expensive restaurant in the city.",["the more","the most","most"],1,"Superlativo largo → the most."]]},
+r:{t:'Online or in class?',s:`In my opinion, studying online has one big advantage: you can study anywhere. However, it is harder to stay motivated than in a classroom. Although online classes are cheaper, I think face-to-face classes are better for speaking practice.`,es:`En mi opinión, estudiar en línea tiene una gran ventaja: puedes estudiar en cualquier lugar. Sin embargo, es más difícil mantenerse motivado que en un salón. Aunque las clases en línea son más baratas, creo que las presenciales son mejores para practicar la conversación.`,q:[["What is the main advantage of online study?",["Study anywhere","It is free","It is faster"],0],["What is better for speaking practice?",["Face-to-face classes","Online classes","Books"],0]]},
+w:{p:'Escribe tu opinión sobre estudiar online vs. presencial con una ventaja y una desventaja (mínimo 5 frases).',m:`In my opinion, online classes are more flexible. However, they are less social. Compared to face-to-face classes, they are cheaper. I think the best option is a mix of both.`,k:["In my opinion","However","Although","I think"],n:50}});
+
+/* B2 */
+U('en','b2','Hipótesis y arrepentimientos',{e:'🤔',
+v:`Issue|Asunto / problema|Climate change is a serious issue.|El cambio climático es un asunto serio.
+Impact|Impacto|The law had a big impact.|La ley tuvo un gran impacto.
+Solution|Solución|We need a practical solution.|Necesitamos una solución práctica.
+Society|Sociedad|Technology changes society.|La tecnología cambia la sociedad.
+Regret|Lamentar|I regret not studying more.|Lamento no haber estudiado más.
+Otherwise|De lo contrario|Hurry up; otherwise, we'll be late.|Apúrate; de lo contrario, llegaremos tarde.
+Suppose|Supongamos|Suppose you won the lottery, what would you do?|Supón que ganaras la lotería, ¿qué harías?
+Consequence|Consecuencia|Every action has a consequence.|Toda acción tiene una consecuencia.`,
+l:`If I had more time, I would travel.|Si tuviera más tiempo, viajaría.
+I wish I had studied more.|Ojalá hubiera estudiado más.`,
+g:{t:'Condicionales 2 y 3 y «wish»',h:`<ul><li><b>2.º (irreal presente):</b> If + pasado simple, <b>would</b> + verbo → <i>If I were rich, I would travel.</i> (con I/he/she se usa <i>were</i>).</li><li><b>3.º (irreal pasado):</b> If + past perfect, <b>would have</b> + participio → <i>If I had studied, I would have passed.</i></li><li><b>wish:</b> wish + pasado (presente irreal) / wish + past perfect (arrepentimiento).</li></ul>`,
+x:[["If I ___ rich, I would travel the world.",["am","were","will be"],1,"Hipótesis irreal → were."],
+["If she had studied, she ___ the exam.",["would pass","would have passed","passed"],1,"3.er condicional → would have + participio."],
+["What ___ you do if you lost your job?",["will","would","did"],1,"2.º condicional → would."],
+["I wish I ___ more time.",["have","had","will have"],1,"wish + pasado."],
+["If they ___ earlier, they wouldn't have missed the train.",["left","had left","would leave"],1,"If + past perfect."]]},
+r:{t:'Second chances',s:`If I could go back, I would study abroad when I was younger. I regret not taking more risks. If I had applied for that scholarship, my life would have been different. Still, if I keep learning, I will create new opportunities.`,es:`Si pudiera volver atrás, estudiaría en el extranjero cuando era más joven. Lamento no haber tomado más riesgos. Si hubiera solicitado esa beca, mi vida habría sido diferente. Aun así, si sigo aprendiendo, crearé nuevas oportunidades.`,q:[["What does the speaker regret?",["Not taking more risks","Studying too much","Moving abroad"],0],["What would have happened with the scholarship?",["Life would have been different","Nothing","It would have been harder"],0]]},
+w:{p:'Escribe 3 hipótesis irreales y 2 arrepentimientos del pasado (mínimo 5 frases).',m:`If I spoke perfect English, I would work abroad. If I had more money, I would buy a house. I wish I had started earlier. If I had practiced more, I would have passed the test.`,k:["If I","would","I wish","would have"],n:70}});
+
+U('en','b2','Negocios y voz pasiva',{e:'📈',
+v:`Negotiate|Negociar|They negotiated a better price.|Negociaron un mejor precio.
+Contract|Contrato|The contract was signed yesterday.|El contrato fue firmado ayer.
+Supplier|Proveedor|Our supplier is based in Italy.|Nuestro proveedor está en Italia.
+Invest|Invertir|The company invested in new machines.|La empresa invirtió en máquinas nuevas.
+Profit|Ganancia|Profits increased by ten percent.|Las ganancias aumentaron un diez por ciento.
+Expand|Expandirse|They plan to expand into Asia.|Planean expandirse hacia Asia.
+Shipment|Envío / cargamento|The shipment was delayed at customs.|El cargamento se retrasó en la aduana.
+Tariff|Arancel|A new tariff was introduced.|Se introdujo un nuevo arancel.`,
+l:`The goods will be delivered on Monday.|Las mercancías serán entregadas el lunes.
+The meeting has been postponed.|La reunión ha sido aplazada.`,
+g:{t:'La voz pasiva (passive voice)',h:`<p>Se usa cuando importa más la acción que quién la hace: <b>be + participio</b>.</p><ul><li>Presente: <i>English is spoken worldwide.</i></li><li>Pasado: <i>The contract was signed yesterday.</i></li><li>Perfecto: <i>The meeting has been postponed.</i></li><li>Futuro: <i>The goods will be delivered.</i></li></ul><p>Si quieres decir quién: <b>by</b> → <i>by the manager</i>.</p>`,
+x:[["The contract ___ yesterday.",["signed","was signed","is signing"],1,"Pasado pasivo: was + participio."],
+["English ___ all over the world.",["speaks","is spoken","is speaking"],1,"Presente pasivo."],
+["The goods ___ by ship next week.",["will be sent","will send","are sending"],0,"Futuro pasivo: will be + participio."],
+["A new tariff ___ introduced last month.",["is","was","has"],1,"Pasado → was introduced."],
+["The shipment ___ delayed at customs.",["was","did","has"],0,"was delayed."]]},
+r:{t:'Company news',s:`The company was founded in 1998 and it has been growing ever since. Last year a new factory was built in Mexico, and products are now exported to twelve countries. A new tariff was introduced in March, so prices will be reviewed next quarter.`,es:`La empresa fue fundada en 1998 y ha estado creciendo desde entonces. El año pasado se construyó una nueva fábrica en México, y los productos ahora se exportan a doce países. En marzo se introdujo un nuevo arancel, por lo que los precios serán revisados el próximo trimestre.`,q:[["Where was the new factory built?",["Mexico","Spain","Peru"],0],["What will be reviewed next quarter?",["Prices","Contracts","Salaries"],0]]},
+w:{p:'Escribe un breve informe de una empresa usando voz pasiva (mínimo 5 frases).',m:`The company was created in 2010. Its products are sold in ten countries. A new office was opened last year. A new product will be launched next month.`,k:["was","is","has been","will be"],n:70}});
+
+U('en','b2','Estilo indirecto',{e:'🗣️',
+v:`Claim|Afirmar / sostener|He claims he never saw the email.|Él afirma que nunca vio el correo.
+Suggest|Sugerir|She suggested going by train.|Ella sugirió ir en tren.
+Admit|Admitir|He admitted that he was wrong.|Él admitió que estaba equivocado.
+Deny|Negar|They denied the rumors.|Ellos negaron los rumores.
+Refuse|Negarse|She refused to sign.|Ella se negó a firmar.
+Warn|Advertir|The guide warned us about the storm.|El guía nos advirtió sobre la tormenta.
+Point out|Señalar|He pointed out several mistakes.|Él señaló varios errores.
+According to|Según|According to the report, sales fell.|Según el informe, las ventas cayeron.`,
+l:`She said she was tired.|Ella dijo que estaba cansada.
+He told me he would call.|Él me dijo que llamaría.`,
+g:{t:'Estilo indirecto (reported speech)',h:`<p>Al contar lo que alguien dijo, los tiempos «retroceden»:</p><ul><li>presente → pasado: «I am tired» → <i>She said she <b>was</b> tired.</i></li><li>will → would: «I will call» → <i>He said he <b>would</b> call.</i></li><li>pasado → past perfect: «We finished» → <i>They said they <b>had finished</b>.</i></li></ul><p><b>said</b> (sin persona) / <b>told + persona</b> → <i>He told me…</i></p>`,
+x:[["«I am tired,» she said. → She said she ___ tired.",["is","was","has been"],1,"Presente → pasado."],
+["«I will call you.» → He said he ___ call me.",["will","would","did"],1,"will → would."],
+["He ___ me that the meeting was cancelled.",["said","told","spoke"],1,"told + persona."],
+["She ___ to sign the contract. (se negó)",["refused","denied","suggested"],0,"refuse to + verbo."],
+["«We finished early.» → They said they ___ early.",["finished","had finished","have finished"],1,"Pasado → past perfect."]]},
+r:{t:'The meeting',s:`At the meeting, the manager said that sales had fallen by five percent. She pointed out that the main problem was the new tariff. Her colleague suggested looking for new suppliers, but the director refused to change the plan. According to the report, the situation would improve next year.`,es:`En la reunión, la gerente dijo que las ventas habían caído un cinco por ciento. Señaló que el problema principal era el nuevo arancel. Su colega sugirió buscar nuevos proveedores, pero el director se negó a cambiar el plan. Según el informe, la situación mejoraría el próximo año.`,q:[["What did the colleague suggest?",["Looking for new suppliers","Closing the office","Raising prices"],0],["What did the director do?",["Refused to change the plan","Accepted the idea","Left the meeting"],0]]},
+w:{p:'Cuenta en estilo indirecto una conversación real o imaginada (mínimo 5 frases).',m:`My teacher said that I was improving. She told me that I should read more. I said that I would try. She suggested watching series in English.`,k:["said that","told me","suggested","would"],n:70}});
+</script>
+<script>/* FRANCÉS A1–B2 */
+U('fr','a1','Salutations et présentations',{e:'👋',
+v:`Bonjour|Buenos días / Hola|Bonjour, madame !|¡Buenos días, señora!
+Salut|Hola / chao (informal)|Salut, Paul !|¡Hola, Paul!
+Au revoir|Adiós|Au revoir, à demain !|¡Adiós, hasta mañana!
+S'il vous plaît|Por favor|Un café, s'il vous plaît.|Un café, por favor.
+Merci|Gracias|Merci beaucoup !|¡Muchas gracias!
+Excusez-moi|Disculpe|Excusez-moi, où est la gare ?|Disculpe, ¿dónde está la estación?
+Enchanté(e)|Mucho gusto|Enchantée, je m'appelle Anna.|Mucho gusto, me llamo Anna.
+Comment allez-vous ?|¿Cómo está usted?|Bonjour ! Comment allez-vous ?|¡Buenos días! ¿Cómo está usted?`,
+l:`Je m'appelle Laura.|Me llamo Laura.
+Je suis colombienne.|Soy colombiana.`,
+g:{t:'Être (ser/estar) y s\'appeler',h:`<p><b>Être</b>: je <b>suis</b>, tu <b>es</b>, il/elle <b>est</b>, nous <b>sommes</b>, vous <b>êtes</b>, ils/elles <b>sont</b>.</p><p>Para presentarte: <b>Je m'appelle</b> + nombre (literalmente «me llamo»). Nacionalidades: femenino suele agregar -e → <i>colombien / colombienne</i>.</p><p>Pronunciación: la «r» se hace en la garganta y las consonantes finales casi no se pronuncian («petit» → «petí»).</p>`,
+x:[["Je ___ colombienne.",["suis","es","est"],0,"je → suis."],
+["Tu ___ étudiant ?",["suis","es","est"],1,"tu → es."],
+["Elle ___ française.",["suis","es","est"],2,"elle → est."],
+["Nous ___ amis.",["sommes","êtes","sont"],0,"nous → sommes."],
+["Ils ___ à Paris.",["sommes","êtes","sont"],2,"ils → sont."]]},
+r:{t:'Je me présente',s:`Bonjour ! Je m'appelle Laura. Je suis colombienne et j'habite à Bucaramanga. Je suis étudiante. J'aime la musique et le français.`,es:`¡Hola! Me llamo Laura. Soy colombiana y vivo en Bucaramanga. Soy estudiante. Me gustan la música y el francés.`,q:[["Laura est…",["Française","Colombienne","Italienne"],1],["¿Qué es Laura?",["Estudiante","Profesora","Doctora"],0]]},
+w:{p:'Preséntate en francés: nombre, nacionalidad, ciudad y gustos (mínimo 4 frases).',m:`Bonjour ! Je m'appelle Anna. Je suis colombienne. J'habite à Bogotá. J'aime la musique.`,k:["Je m'appelle","Je suis","J'habite","J'aime"],n:12}});
+
+U('fr','a1','La famille et les articles',{e:'👨‍👩‍👧',
+v:`la mère|la madre|Ma mère est professeure.|Mi madre es profesora.
+le père|el padre|Mon père travaille beaucoup.|Mi padre trabaja mucho.
+le frère|el hermano|J'ai un frère.|Tengo un hermano.
+la sœur|la hermana|Ma sœur est petite.|Mi hermana es pequeña.
+un ami|un amigo|C'est un ami de Paris.|Es un amigo de París.
+la famille|la familia|J'aime ma famille.|Amo a mi familia.
+le grand-père|el abuelo|Mon grand-père habite à Lyon.|Mi abuelo vive en Lyon.
+l'enfant|el niño / la niña|L'enfant joue dehors.|El niño juega afuera.`,
+l:`Voici ma famille.|Esta es mi familia.
+J'ai deux frères.|Tengo dos hermanos.`,
+g:{t:'Género y artículos',h:`<p>Todo sustantivo francés es masculino o femenino. Aprende siempre el artículo con la palabra.</p><ul><li><b>Definidos:</b> le (m), la (f), l' (vocal), les (plural)</li><li><b>Indefinidos:</b> un (m), une (f), des (plural)</li><li><b>Posesivos:</b> mon (m), ma (f), mes (plural)</li></ul>`,
+x:[["___ mère (la madre)",["le","la","les"],1,"mère es femenino → la."],
+["___ père",["le","la","une"],0,"père es masculino → le."],
+["J'ai ___ sœur.",["un","une","des"],1,"sœur es femenino → une."],
+["___ enfants jouent. (los niños)",["Le","La","Les"],2,"Plural → les."],
+["___ ami (un amigo)",["Un","Une","Des"],0,"ami masculino singular → un."]]},
+r:{t:'Ma famille',s:`Voici ma famille. Ma mère s'appelle Claire et mon père s'appelle Marc. J'ai un frère et une sœur. Mon grand-père habite avec nous.`,es:`Esta es mi familia. Mi madre se llama Claire y mi padre se llama Marc. Tengo un hermano y una hermana. Mi abuelo vive con nosotros.`,q:[["¿Cuántos hermanos tiene?",["Dos (un hermano y una hermana)","Uno","Tres"],0],["¿Quién vive con ellos?",["El abuelo","La abuela","Un amigo"],0]]},
+w:{p:'Presenta a tu familia en francés (mínimo 4 frases).',m:`Voici ma famille. Ma mère s'appelle Rosa. Mon père travaille à Bogotá. J'ai une sœur. J'aime ma famille.`,k:["Ma mère","Mon père","J'ai","ma famille"],n:12}});
+
+U('fr','a2','Ma routine quotidienne',{e:'⏰',
+v:`se lever|levantarse|Je me lève à sept heures.|Me levanto a las siete.
+prendre le petit-déjeuner|desayunar|Il prend le petit-déjeuner à huit heures.|Él desayuna a las ocho.
+travailler|trabajar|Elle travaille à Lyon.|Ella trabaja en Lyon.
+étudier|estudiar|J'étudie le français le soir.|Estudio francés por la noche.
+rentrer|volver a casa|Nous rentrons à six heures.|Volvemos a casa a las seis.
+se coucher|acostarse|Je me couche à onze heures.|Me acuesto a las once.
+souvent|a menudo|Je mange souvent des fruits.|Como fruta a menudo.
+toujours|siempre|Elle est toujours à l'heure.|Ella siempre llega a tiempo.`,
+l:`Je vais à l'université en bus.|Voy a la universidad en bus.
+Il est huit heures.|Son las ocho.`,
+g:{t:'Verbos en -er y verbos pronominales',h:`<p><b>Verbos en -er</b> (parler): je parl<b>e</b>, tu parl<b>es</b>, il parl<b>e</b>, nous parl<b>ons</b>, vous parl<b>ez</b>, ils parl<b>ent</b>.</p><p><b>Pronominales</b> (se lever): je <b>me</b> lève, tu <b>te</b> lèves, il <b>se</b> lève, nous <b>nous</b> levons, vous <b>vous</b> levez, ils <b>se</b> lèvent.</p>`,
+x:[["Je ___ français. (parler)",["parle","parles","parlons"],0,"je → parle."],
+["Nous ___ à Paris. (habiter)",["habite","habitons","habitez"],1,"nous → -ons."],
+["Ils ___ le soir. (étudier)",["étudie","étudions","étudient"],2,"ils → -ent (no se pronuncia)."],
+["Je ___ lève à sept heures.",["me","te","se"],0,"je → me."],
+["Elle ___ couche tôt.",["me","se","nous"],1,"elle → se."]]},
+r:{t:'Ma journée',s:`Je me lève à sept heures. Je prends le petit-déjeuner et je vais à l'université. Je travaille souvent à la bibliothèque. Je rentre à six heures et je me couche à onze heures.`,es:`Me levanto a las siete. Desayuno y voy a la universidad. A menudo trabajo en la biblioteca. Vuelvo a casa a las seis y me acuesto a las once.`,q:[["¿A qué hora se levanta?",["7","6","8"],0],["¿Dónde trabaja a menudo?",["En la biblioteca","En casa","En un café"],0]]},
+w:{p:'Cuenta tu rutina diaria en francés (mínimo 5 frases).',m:`Je me lève à six heures. Je prends le petit-déjeuner. Je travaille à l'université. Je rentre à cinq heures. Je me couche à dix heures.`,k:["Je me lève","Je travaille","Je rentre","Je me couche"],n:20}});
+
+U('fr','a2','Voyager: le passé composé',{e:'🚆',
+v:`le billet|el boleto|J'ai acheté un billet de train.|Compré un boleto de tren.
+la gare|la estación|Nous sommes arrivés à la gare.|Llegamos a la estación.
+la valise|la maleta|Ma valise est lourde.|Mi maleta es pesada.
+voyager|viajar|Elle a voyagé en Italie.|Ella viajó por Italia.
+arriver|llegar|Le train est arrivé à neuf heures.|El tren llegó a las nueve.
+partir|partir / irse|Ils sont partis hier.|Ellos se fueron ayer.
+visiter|visitar|Nous avons visité le Louvre.|Visitamos el Louvre.
+le voyage|el viaje|C'était un beau voyage.|Fue un hermoso viaje.`,
+l:`Hier, j'ai mangé une crêpe.|Ayer comí una crepa.
+Elle est allée à Paris.|Ella fue a París.`,
+g:{t:'Passé composé: avoir / être + participio',h:`<p>Para acciones terminadas: <b>auxiliar + participio pasado</b>.</p><ul><li>Con <b>avoir</b> (la mayoría): <i>j'ai mangé, nous avons visité</i></li><li>Con <b>être</b> (aller, arriver, partir, venir, sortir… y los pronominales): <i>elle est partie</i> — el participio <b>concuerda</b> con el sujeto (+e femenino, +s plural).</li></ul>`,
+x:[["Hier, j'___ un billet. (acheter)",["ai acheté","suis acheté","a acheté"],0,"acheter usa avoir."],
+["Nous ___ visité le musée.",["avons","sommes","avez"],0,"visiter usa avoir."],
+["Elle est ___ à Paris. (arriver)",["arrivé","arrivée","arrivés"],1,"Sujeto femenino → arrivée."],
+["Ils ___ partis hier.",["ont","sont","ai"],1,"partir usa être."],
+["J'___ voyagé en train.",["ai","suis","es"],0,"voyager usa avoir."]]},
+r:{t:'Un voyage à Paris',s:`L'été dernier, j'ai voyagé en France avec ma sœur. Nous sommes arrivées à Paris le matin. Nous avons visité le Louvre et nous avons mangé des croissants. C'était un voyage magnifique !`,es:`El verano pasado viajé a Francia con mi hermana. Llegamos a París por la mañana. Visitamos el Louvre y comimos croissants. ¡Fue un viaje magnífico!`,q:[["¿Con quién viajó?",["Con su hermana","Con un amigo","Sola"],0],["¿Qué visitaron?",["El Louvre","La Torre Eiffel","Versalles"],0]]},
+w:{p:'Cuenta tu último viaje o fin de semana en passé composé (mínimo 5 frases).',m:`Le week-end dernier, je suis allée chez ma grand-mère. Nous avons cuisiné et nous avons regardé un film. J'ai beaucoup mangé !`,k:["J'ai","Nous avons","Je suis allé","C'était"],n:25}});
+
+U('fr','b1','Souvenirs: imparfait et passé composé',{e:'📷',
+v:`autrefois|antes / antaño|Autrefois, j'habitais à la campagne.|Antes vivía en el campo.
+un souvenir|un recuerdo|C'est un beau souvenir.|Es un lindo recuerdo.
+quand j'étais petit(e)|cuando era niño/a|Quand j'étais petite, je jouais dehors.|Cuando era pequeña, jugaba afuera.
+raconter|contar (una historia)|Il raconte une histoire drôle.|Él cuenta una historia graciosa.
+pendant que|mientras|Il lisait pendant que je cuisinais.|Él leía mientras yo cocinaba.
+soudain|de repente|Soudain, il a commencé à pleuvoir.|De repente, empezó a llover.
+ce jour-là|ese día|Ce jour-là, il faisait très froid.|Ese día hacía mucho frío.
+habituellement|habitualmente|Habituellement, je me levais tôt.|Habitualmente me levantaba temprano.`,
+l:`Quand j'étais enfant, j'aimais dessiner.|Cuando era niño, me gustaba dibujar.
+Un jour, j'ai perdu mon chien.|Un día perdí a mi perro.`,
+g:{t:'Imparfait vs passé composé',h:`<ul><li><b>Imparfait</b>: descripciones, hábitos y acciones en curso en el pasado. Raíz de «nous» + <b>-ais, -ais, -ait, -ions, -iez, -aient</b> → <i>je jouais</i>.</li><li><b>Passé composé</b>: acciones puntuales y terminadas → <i>j'ai trouvé</i>.</li></ul><p>Truco: el imparfait es el «fondo» de la escena (cómo era todo); el passé composé es lo que «pasó» (el evento).</p>`,
+x:[["Quand j'étais petite, je ___ dehors.",["jouais","ai joué","joue"],0,"Hábito en el pasado → imparfait."],
+["Soudain, le téléphone ___.",["sonnait","a sonné","sonne"],1,"Evento puntual → passé composé."],
+["Chaque été, nous ___ chez mes grands-parents.",["sommes allés","allions","irons"],1,"Hábito repetido → imparfait."],
+["Il ___ beau ce jour-là.",["faisait","a fait","fera"],0,"Descripción del clima → imparfait."],
+["Hier, j'___ un film.",["regardais","ai regardé","regarde"],1,"Acción terminada ayer → passé composé."]]},
+r:{t:'Quand j\'étais petite',s:`Quand j'étais petite, j'habitais à la campagne. Chaque été, nous allions chez mes grands-parents. Un jour, pendant que je jouais dans le jardin, j'ai trouvé un petit chat. C'est un souvenir que j'aime beaucoup.`,es:`Cuando era pequeña, vivía en el campo. Cada verano íbamos donde mis abuelos. Un día, mientras jugaba en el jardín, encontré un gatito. Es un recuerdo que quiero mucho.`,q:[["¿Dónde vivía de pequeña?",["En el campo","En la ciudad","En la playa"],0],["¿Qué encontró un día?",["Un gatito","Un perro","Un libro"],0]]},
+w:{p:'Escribe un recuerdo de tu infancia: cómo era todo (imparfait) y qué pasó un día (passé composé). Mínimo 5 frases.',m:`Quand j'étais enfant, j'habitais chez mes grands-parents. Il y avait un grand jardin. Un jour, j'ai trouvé un petit oiseau. Je l'ai soigné pendant une semaine.`,k:["Quand j'étais","j'habitais","Un jour","j'ai"],n:40}});
+
+U('fr','b1','Projets: futur et conditionnel',{e:'🎯',
+v:`le projet|el proyecto|J'ai un grand projet.|Tengo un gran proyecto.
+l'avenir|el futuro|Je pense à mon avenir.|Pienso en mi futuro.
+espérer|esperar (tener esperanza)|J'espère voyager en Italie.|Espero viajar a Italia.
+décider|decidir|Nous avons décidé de partir.|Decidimos irnos.
+avoir l'intention de|tener la intención de|Elle a l'intention d'étudier à Paris.|Ella tiene la intención de estudiar en París.
+le rêve|el sueño|Mon rêve est de voyager.|Mi sueño es viajar.
+l'objectif|el objetivo|Mon objectif est de parler couramment.|Mi objetivo es hablar con fluidez.
+je voudrais|quisiera|Je voudrais un café, s'il vous plaît.|Quisiera un café, por favor.`,
+l:`Demain, je serai à Paris.|Mañana estaré en París.
+Je voudrais réserver une table.|Quisiera reservar una mesa.`,
+g:{t:'Futur simple y conditionnel',h:`<ul><li><b>Futur simple</b>: infinitivo + <b>-ai, -as, -a, -ons, -ez, -ont</b> → <i>je parlerai</i>. Irregulares: être → <i>serai</i>, avoir → <i>aurai</i>, aller → <i>irai</i>, faire → <i>ferai</i>.</li><li><b>Conditionnel</b> (mismas raíces + terminaciones del imparfait): <i>je voudrais, je pourrais, ce serait</i>. Sirve para cortesía y deseos.</li><li><b>Si + imparfait → conditionnel</b>: <i>Si j'avais le temps, je voyagerais.</i></li></ul>`,
+x:[["Demain, je ___ à Paris. (aller)",["irai","vais","allais"],0,"Futuro irregular: irai."],
+["Nous ___ le français. (étudier, futur)",["étudierons","étudions","étudiions"],0,"étudier + ons → étudierons."],
+["Je ___ un café, s'il vous plaît. (cortés)",["voudrais","veux","voulais"],0,"Conditionnel de cortesía."],
+["Si j'avais de l'argent, je ___ le monde.",["voyagerais","voyagerai","voyageais"],0,"Si + imparfait → conditionnel."],
+["Elle ___ médecin. (être, futuro)",["sera","serait","est"],0,"Futuro de être: sera."]]},
+r:{t:'Mon avenir',s:`Dans cinq ans, je serai diplômée en commerce international. J'espère travailler dans une entreprise à l'étranger. Si j'avais le choix, je choisirais la France, parce que j'adore la culture et la langue.`,es:`Dentro de cinco años, me habré graduado en comercio internacional. Espero trabajar en una empresa en el extranjero. Si pudiera elegir, elegiría Francia, porque adoro la cultura y la lengua.`,q:[["¿Qué estudia?",["Comercio internacional","Medicina","Arte"],0],["¿Qué país elegiría?",["Francia","Italia","Canadá"],0]]},
+w:{p:'Escribe 3 frases sobre tu futuro (futur simple) y 2 deseos (conditionnel). Mínimo 5 frases.',m:`Dans dix ans, je travaillerai dans une grande entreprise. J'habiterai à Paris. Je voyagerai beaucoup. Je voudrais parler cinq langues. Ce serait un rêve.`,k:["je serai","je ferai","je voudrais","ce serait"],n:40}});
+
+U('fr','b2','Opinions: le subjonctif',{e:'⚖️',
+v:`il faut que|es necesario que|Il faut que tu viennes.|Es necesario que vengas.
+bien que|aunque|Bien qu'il soit tard, je continue.|Aunque sea tarde, sigo.
+pour que|para que|Je t'explique pour que tu comprennes.|Te explico para que entiendas.
+à condition que|con la condición de que|J'accepte, à condition que tu m'aides.|Acepto, con la condición de que me ayudes.
+regretter que|lamentar que|Je regrette qu'il ne soit pas là.|Lamento que él no esté aquí.
+vouloir que|querer que|Je veux que tu réussisses.|Quiero que tengas éxito.
+douter que|dudar que|Je doute qu'il vienne.|Dudo que venga.
+il est important que|es importante que|Il est important que nous partions tôt.|Es importante que salgamos temprano.`,
+l:`Il faut que je parte.|Es necesario que me vaya.
+Je veux que tu sois heureux.|Quiero que seas feliz.`,
+g:{t:'Le subjonctif présent',h:`<p>Raíz de «ils» del presente + <b>-e, -es, -e, -ions, -iez, -ent</b> → <i>que je parle</i>.</p><p><b>Irregulares clave:</b> être → <i>sois</i>, avoir → <i>aie</i>, aller → <i>aille</i>, faire → <i>fasse</i>, pouvoir → <i>puisse</i>.</p><p><b>Se usa tras:</b> necesidad (il faut que), deseo (vouloir que), duda (douter que), emoción (regretter que), y conjunciones como <i>bien que, pour que, à condition que</i>.</p><p>Ojo: <i>penser que</i> afirmativo → indicativo.</p>`,
+x:[["Il faut que tu ___ à l'heure. (venir)",["viens","viennes","venais"],1,"il faut que → subjonctif."],
+["Je veux que nous ___ ensemble. (partir)",["partons","partions","partirons"],1,"vouloir que → subjonctif."],
+["Bien qu'il ___ fatigué, il travaille. (être)",["est","soit","sera"],1,"bien que → subjonctif."],
+["Je pense qu'il ___ raison. (avoir)",["ait","a","aura"],1,"penser que (afirmativo) → indicativo."],
+["Il est important que tu ___ prêt. (être)",["es","sois","seras"],1,"il est important que → subjonctif."]]},
+r:{t:'L\'entretien',s:`Pour réussir un entretien, il faut que vous soyez préparé. Il est important que vous connaissiez l'entreprise et que vous posiez des questions. Bien que ce soit stressant, il vaut mieux que vous restiez calme.`,es:`Para tener éxito en una entrevista, es necesario que esté preparado. Es importante que conozca la empresa y que haga preguntas. Aunque sea estresante, es mejor que se mantenga tranquilo.`,q:[["¿Qué es importante?",["Conocer la empresa","Llegar tarde","Hablar poco"],0],["¿Qué conviene mantener?",["La calma","El silencio","La prisa"],0]]},
+w:{p:'Escribe 4 consejos para un amigo usando el subjonctif (il faut que…, il est important que…, je veux que…). Mínimo 4 frases.',m:`Il faut que tu étudies chaque jour. Il est important que tu sois patient. Je veux que tu réussisses. Bien que ce soit difficile, il faut que tu continues.`,k:["Il faut que","Il est important que","Je veux que","Bien que"],n:35}});
+
+U('fr','b2','Argumenter: connecteurs, y et en',{e:'🧠',
+v:`cependant|sin embargo|Il est jeune ; cependant, il est très mûr.|Es joven; sin embargo, es muy maduro.
+pourtant|y sin embargo|Il a étudié, pourtant il a échoué.|Estudió, y sin embargo, reprobó.
+d'ailleurs|por cierto / además|D'ailleurs, tu as vu le message ?|Por cierto, ¿viste el mensaje?
+en effet|en efecto|En effet, vous avez raison.|En efecto, tiene razón.
+afin de|con el fin de|Il travaille afin de gagner de l'argent.|Trabaja con el fin de ganar dinero.
+malgré|a pesar de|Malgré la pluie, nous sortons.|A pesar de la lluvia, salimos.
+donc|entonces / por lo tanto|Je pense, donc je suis.|Pienso, luego existo.
+par conséquent|por consiguiente|Les prix montent ; par conséquent, nous achetons moins.|Los precios suben; por consiguiente, compramos menos.`,
+l:`J'y vais demain.|Voy allá mañana.
+Il en veut deux.|Él quiere dos (de eso).`,
+g:{t:'Los pronombres «y» y «en»',h:`<ul><li><b>y</b> = allí / a eso → <i>Tu vas à Paris ? Oui, j'<b>y</b> vais.</i> / <i>Il pense à son projet → il y pense.</i></li><li><b>en</b> = de eso / cantidad → <i>Tu veux du pain ? Oui, j'<b>en</b> veux.</i> / <i>Elle a trois frères → elle en a trois.</i></li></ul><p>Van <b>antes del verbo conjugado</b>. Los conectores (cependant, pourtant, en effet, donc…) dan fluidez al discurso B2.</p>`,
+x:[["Tu vas à Paris ? Oui, j'___ vais.",["y","en","le"],0,"y = allí."],
+["Tu veux du pain ? Oui, j'___ veux.",["y","en","la"],1,"du pain → en."],
+["Il pense à son projet ? Oui, il ___ pense.",["y","en","lui"],0,"penser à → y."],
+["Elle a trois frères ? Oui, elle ___ a trois.",["y","en","le"],1,"Cantidad → en."],
+["Tu parles de ton voyage ? Oui, j'___ parle.",["y","en","le"],1,"parler de → en."]]},
+r:{t:'Le commerce international',s:`Le marché international évolue rapidement. En effet, de nombreuses entreprises cherchent de nouveaux clients à l'étranger. Pourtant, exporter n'est pas simple : il faut connaître les règles douanières. Par conséquent, la formation est essentielle.`,es:`El mercado internacional evoluciona rápidamente. En efecto, muchas empresas buscan nuevos clientes en el extranjero. Sin embargo, exportar no es sencillo: hay que conocer las reglas aduaneras. Por consiguiente, la formación es esencial.`,q:[["¿Qué es esencial?",["La formación","El azar","El precio"],0],["¿Qué hay que conocer?",["Las reglas aduaneras","Los horarios","La moda"],0]]},
+w:{p:'Escribe 4 frases argumentando sobre exportar o estudiar idiomas con los conectores cependant, en effet, donc, malgré.',m:`Apprendre une langue est difficile ; cependant, c'est très utile. En effet, on peut travailler à l'étranger. Malgré les difficultés, je continue. Donc je pratique chaque jour.`,k:["cependant","en effet","donc","malgré"],n:40}});
+</script>
+<script>/* ITALIANO A1–B2 */
+U('it','a1','Saluti e presentazioni',{e:'👋',
+v:`Ciao|Hola / chao|Ciao, Marco!|¡Hola, Marco!
+Buongiorno|Buenos días|Buongiorno, signora!|¡Buenos días, señora!
+Buonasera|Buenas tardes / noches|Buonasera a tutti.|Buenas noches a todos.
+Arrivederci|Hasta luego / adiós|Arrivederci, a domani!|¡Adiós, hasta mañana!
+Per favore|Por favor|Un caffè, per favore.|Un café, por favor.
+Grazie|Gracias|Grazie mille!|¡Mil gracias!
+Scusi|Disculpe|Scusi, dov'è la stazione?|Disculpe, ¿dónde está la estación?
+Piacere|Mucho gusto|Piacere, mi chiamo Anna.|Mucho gusto, me llamo Anna.`,
+l:`Come stai?|¿Cómo estás?
+Sono colombiana.|Soy colombiana.`,
+g:{t:'Essere (ser/estar) y chiamarsi',h:`<p><b>Essere</b>: io <b>sono</b>, tu <b>sei</b>, lui/lei <b>è</b>, noi <b>siamo</b>, voi <b>siete</b>, loro <b>sono</b>.</p><p>Para presentarte: <b>Mi chiamo</b> + nombre. El italiano suele omitir el pronombre: «Sono colombiana».</p><p>Pronunciación: se lee como se escribe. <b>c</b> + e/i suena «ch» (ciao); <b>gli</b> suena «lli» fuerte (famiglia); las consonantes dobles se alargan (pala ≠ palla).</p>`,
+x:[["Io ___ colombiana.",["sono","sei","è"],0,"io → sono."],
+["Tu ___ studente?",["sono","sei","è"],1,"tu → sei."],
+["Lei ___ italiana.",["sono","sei","è"],2,"lei → è."],
+["Noi ___ amici.",["siamo","siete","sono"],0,"noi → siamo."],
+["Loro ___ a Roma.",["siamo","siete","sono"],2,"loro → sono."]]},
+r:{t:'Mi presento',s:`Ciao! Mi chiamo Laura. Sono colombiana e abito a Bucaramanga. Sono studentessa. Mi piacciono la musica e l'italiano.`,es:`¡Hola! Me llamo Laura. Soy colombiana y vivo en Bucaramanga. Soy estudiante. Me gustan la música y el italiano.`,q:[["Laura è…",["Italiana","Colombiana","Francese"],1],["¿Qué es Laura?",["Estudiante","Profesora","Doctora"],0]]},
+w:{p:'Preséntate en italiano: nombre, nacionalidad, ciudad y gustos (mínimo 4 frases).',m:`Ciao! Mi chiamo Anna. Sono colombiana. Abito a Bogotá. Mi piace la musica.`,k:["Mi chiamo","Sono","Abito","Mi piace"],n:12}});
+
+U('it','a1','La famiglia e gli articoli',{e:'👨‍👩‍👧',
+v:`la madre|la madre|Mia madre è insegnante.|Mi madre es profesora.
+il padre|el padre|Mio padre lavora molto.|Mi padre trabaja mucho.
+il fratello|el hermano|Ho un fratello.|Tengo un hermano.
+la sorella|la hermana|Mia sorella è piccola.|Mi hermana es pequeña.
+l'amico|el amigo|È un amico di Roma.|Es un amigo de Roma.
+la famiglia|la familia|Amo la mia famiglia.|Amo a mi familia.
+il nonno|el abuelo|Mio nonno abita a Napoli.|Mi abuelo vive en Nápoles.
+il bambino|el niño|Il bambino gioca fuori.|El niño juega afuera.`,
+l:`Questa è la mia famiglia.|Esta es mi familia.
+Ho due fratelli.|Tengo dos hermanos.`,
+g:{t:'Género y artículos',h:`<p>Los sustantivos italianos son masculinos (-o) o femeninos (-a); plural: -o → -i, -a → -e.</p><ul><li><b>Definidos masc.:</b> il (consonante), <b>lo</b> (s+consonante, z), <b>l'</b> (vocal); plural i / gli</li><li><b>Definidos fem.:</b> la, l' (vocal); plural le</li><li><b>Indefinidos:</b> un, uno, una, un'</li></ul>`,
+x:[["___ madre",["Il","La","Lo"],1,"madre es femenino → la."],
+["___ padre",["Il","La","Le"],0,"padre es masculino → il."],
+["___ amico (el amigo)",["L'","Il","La"],0,"Vocal → l'."],
+["___ studente (el estudiante)",["Il","Lo","La"],1,"s + consonante → lo."],
+["___ bambini (los niños)",["I","Gli","Le"],0,"Plural de il bambino → i bambini."]]},
+r:{t:'La mia famiglia',s:`Questa è la mia famiglia. Mia madre si chiama Claudia e mio padre si chiama Marco. Ho un fratello e una sorella. Mio nonno abita con noi.`,es:`Esta es mi familia. Mi madre se llama Claudia y mi padre se llama Marco. Tengo un hermano y una hermana. Mi abuelo vive con nosotros.`,q:[["¿Cuántos hermanos tiene?",["Dos (un hermano y una hermana)","Uno","Tres"],0],["¿Quién vive con ellos?",["El abuelo","La abuela","Un amigo"],0]]},
+w:{p:'Presenta a tu familia en italiano (mínimo 4 frases).',m:`Questa è la mia famiglia. Mia madre si chiama Rosa. Mio padre lavora a Bogotá. Ho una sorella. Amo la mia famiglia.`,k:["Mia madre","Mio padre","Ho","la mia famiglia"],n:12}});
+
+U('it','a2','Al ristorante: il presente',{e:'🍝',
+v:`il menù|el menú|Posso vedere il menù, per favore?|¿Puedo ver el menú, por favor?
+ordinare|pedir / ordenar|Vorrei ordinare adesso.|Quisiera pedir ahora.
+il conto|la cuenta|Il conto, per favore.|La cuenta, por favor.
+delizioso|delicioso|Questa pasta è deliziosa.|Esta pasta está deliciosa.
+avere fame|tener hambre|Ho molta fame.|Tengo mucha hambre.
+avere sete|tener sed|Hai sete?|¿Tienes sed?
+vorrei|quisiera|Vorrei un'insalata.|Quisiera una ensalada.
+la mancia|la propina|Lasciamo una mancia.|Dejamos propina.`,
+l:`Un tavolo per due, per favore.|Una mesa para dos, por favor.
+Cosa prendi da bere?|¿Qué tomas para beber?`,
+g:{t:'Presente de los verbos regulares y vorrei',h:`<ul><li><b>-are</b> (parlare): parl<b>o</b>, parl<b>i</b>, parl<b>a</b>, parl<b>iamo</b>, parl<b>ate</b>, parl<b>ano</b></li><li><b>-ere</b> (prendere): prend<b>o, i, e, iamo, ete, ono</b></li><li><b>-ire</b> (dormire): dorm<b>o, i, e, iamo, ite, ono</b></li></ul><p><b>Vorrei</b> = quisiera (cortés). <b>Avere</b>: ho, hai, ha, abbiamo, avete, hanno — ¡«ho fame» = tengo hambre!</p>`,
+x:[["Io ___ italiano. (parlare)",["parlo","parli","parla"],0,"io → -o."],
+["Noi ___ la pasta. (prendere)",["prendo","prendiamo","prendete"],1,"noi → -iamo."],
+["Loro ___ tardi. (dormire)",["dorme","dormiamo","dormono"],2,"loro → -ono."],
+["___ un caffè, per favore.",["Vorrei","Voglio","Vuoi"],0,"Vorrei es la forma cortés."],
+["Lui ___ molta fame. (avere)",["ho","ha","hai"],1,"lui → ha."]]},
+r:{t:'Al ristorante',s:`Al ristorante Maria dice: «Buonasera, vorrei una pasta al pomodoro, per favore.» Il cameriere chiede: «Da bere?» Maria risponde: «Acqua naturale, grazie.» La pasta è deliziosa!`,es:`En el restaurante María dice: «Buenas noches, quisiera una pasta al tomate, por favor». El mesero pregunta: «¿Para beber?». María responde: «Agua sin gas, gracias». ¡La pasta está deliciosa!`,q:[["¿Qué pide María?",["Pasta al tomate","Pizza","Ensalada"],0],["¿Qué bebe?",["Agua","Vino","Jugo"],0]]},
+w:{p:'Imagina pedir comida en un restaurante italiano: escribe un diálogo corto (mínimo 25 palabras).',m:`Buonasera! Vorrei una pizza, per favore. Da bere vorrei acqua. Il conto, per favore. Grazie mille!`,k:["Vorrei","per favore","grazie"],n:25}});
+
+U('it','a2','Viaggiare: il passato prossimo',{e:'🚆',
+v:`il viaggio|el viaje|È stato un viaggio bellissimo.|Fue un viaje hermosísimo.
+il biglietto|el boleto|Ho comprato un biglietto del treno.|Compré un boleto de tren.
+la stazione|la estación|Siamo arrivati alla stazione.|Llegamos a la estación.
+la valigia|la maleta|La mia valigia è pesante.|Mi maleta es pesada.
+arrivare|llegar|Il treno è arrivato alle nove.|El tren llegó a las nueve.
+partire|partir|Sono partiti ieri.|Se fueron ayer.
+visitare|visitar|Abbiamo visitato il Colosseo.|Visitamos el Coliseo.
+l'albergo|el hotel|L'albergo era vicino al mare.|El hotel estaba cerca del mar.`,
+l:`Ieri ho mangiato la pizza.|Ayer comí pizza.
+Lei è andata a Roma.|Ella fue a Roma.`,
+g:{t:'Passato prossimo: avere / essere + participio',h:`<p><b>Auxiliar + participio</b>. Participios regulares: -are → <b>-ato</b>, -ere → <b>-uto</b>, -ire → <b>-ito</b>.</p><ul><li>Con <b>avere</b> (la mayoría): <i>ho mangiato, abbiamo visitato</i></li><li>Con <b>essere</b> (andare, arrivare, partire, venire, uscire…): el participio <b>concuerda</b>: <i>lei è partita, loro sono partiti</i>.</li></ul>`,
+x:[["Ieri ho ___ un biglietto. (comprare)",["comprato","comprata","compro"],0,"comprare → comprato."],
+["Noi ___ visitato Roma.",["abbiamo","siamo","avete"],0,"visitare usa avere."],
+["Lei è ___ a Milano. (arrivare)",["arrivato","arrivata","arrivati"],1,"Sujeto femenino → arrivata."],
+["Loro ___ partiti ieri.",["hanno","sono","ha"],1,"partire usa essere."],
+["Io ___ mangiato la pizza.",["ho","sono","ha"],0,"mangiare usa avere."]]},
+r:{t:'Un viaggio a Roma',s:`L'estate scorsa ho viaggiato in Italia con mia sorella. Siamo arrivate a Roma la mattina. Abbiamo visitato il Colosseo e abbiamo mangiato la pizza. È stato un viaggio bellissimo!`,es:`El verano pasado viajé a Italia con mi hermana. Llegamos a Roma por la mañana. Visitamos el Coliseo y comimos pizza. ¡Fue un viaje hermosísimo!`,q:[["¿Con quién viajó?",["Con su hermana","Sola","Con un amigo"],0],["¿Qué visitaron?",["El Coliseo","El Vaticano","Pompeya"],0]]},
+w:{p:'Cuenta tu último viaje o fin de semana en passato prossimo (mínimo 5 frases).',m:`Il fine settimana scorso sono andata dai miei nonni. Abbiamo cucinato e abbiamo guardato un film. Ho mangiato molto!`,k:["Ho","Abbiamo","Sono andato","È stato"],n:25}});
+
+U('it','b1','Ricordi: imperfetto e passato prossimo',{e:'📷',
+v:`una volta|una vez / antes|Una volta abitavo in campagna.|Antes vivía en el campo.
+il ricordo|el recuerdo|È un bel ricordo.|Es un lindo recuerdo.
+da piccola|de pequeña|Da piccola giocavo fuori.|De pequeña jugaba afuera.
+raccontare|contar|Lui racconta una storia buffa.|Él cuenta una historia graciosa.
+mentre|mientras|Leggeva mentre io cucinavo.|Él leía mientras yo cocinaba.
+all'improvviso|de repente|All'improvviso ha iniziato a piovere.|De repente empezó a llover.
+quel giorno|ese día|Quel giorno faceva molto freddo.|Ese día hacía mucho frío.
+di solito|por lo general|Di solito mi alzavo presto.|Por lo general me levantaba temprano.`,
+l:`Da bambino amavo disegnare.|De niño amaba dibujar.
+Un giorno ho perso il cane.|Un día perdí al perro.`,
+g:{t:'Imperfetto vs passato prossimo',h:`<ul><li><b>Imperfetto</b>: descripciones, hábitos, acciones en curso → <i>parlavo, parlavi, parlava, parlavamo, parlavate, parlavano</i> (-ere/-ire: -evo, -ivo…).</li><li><b>Passato prossimo</b>: acciones puntuales terminadas → <i>ho trovato</i>.</li></ul><p>Truco: el imperfetto es el «fondo» de la escena; el passato prossimo es lo que «pasó».</p>`,
+x:[["Da piccola ___ fuori.",["giocavo","ho giocato","gioco"],0,"Hábito pasado → imperfetto."],
+["All'improvviso il telefono ___.",["suonava","ha suonato","suona"],1,"Evento puntual → passato prossimo."],
+["Ogni estate ___ dai nonni.",["siamo andati","andavamo","andremo"],1,"Hábito repetido → imperfetto."],
+["Quel giorno ___ bel tempo.",["faceva","ha fatto","farà"],0,"Descripción → imperfetto."],
+["Ieri ___ un film.",["guardavo","ho guardato","guardo"],1,"Acción terminada → passato prossimo."]]},
+r:{t:'Da piccola',s:`Da piccola abitavo in campagna. Ogni estate andavamo dai nonni. Un giorno, mentre giocavo in giardino, ho trovato un gattino. È un ricordo che amo molto.`,es:`De pequeña vivía en el campo. Cada verano íbamos donde los abuelos. Un día, mientras jugaba en el jardín, encontré un gatito. Es un recuerdo que quiero mucho.`,q:[["¿Dónde vivía de pequeña?",["En el campo","En la ciudad","En la playa"],0],["¿Qué encontró un día?",["Un gatito","Un perro","Un libro"],0]]},
+w:{p:'Escribe un recuerdo de tu infancia: cómo era todo (imperfetto) y qué pasó un día (passato prossimo). Mínimo 5 frases.',m:`Da bambina abitavo dai nonni. C'era un grande giardino. Un giorno ho trovato un uccellino. L'ho curato per una settimana.`,k:["Da piccola","abitavo","Un giorno","ho"],n:40}});
+
+U('it','b1','Progetti: futuro e condizionale',{e:'🎯',
+v:`il progetto|el proyecto|Ho un grande progetto.|Tengo un gran proyecto.
+il futuro|el futuro|Penso al mio futuro.|Pienso en mi futuro.
+sperare|esperar|Spero di viaggiare in Italia.|Espero viajar a Italia.
+decidere|decidir|Abbiamo deciso di partire.|Decidimos irnos.
+il sogno|el sueño|Il mio sogno è viaggiare.|Mi sueño es viajar.
+l'obiettivo|el objetivo|Il mio obiettivo è parlare bene.|Mi objetivo es hablar bien.
+cambiare|cambiar|Voglio cambiare lavoro.|Quiero cambiar de trabajo.
+imparare|aprender|Imparerò l'italiano.|Aprenderé italiano.`,
+l:`Domani sarò a Roma.|Mañana estaré en Roma.
+Vorrei prenotare un tavolo.|Quisiera reservar una mesa.`,
+g:{t:'Futuro semplice e condizionale',h:`<ul><li><b>Futuro</b>: raíz del infinitivo + <b>-ò, -ai, -à, -emo, -ete, -anno</b> → <i>parlerò</i> (-are → -erò). Irregulares: essere → <i>sarò</i>, avere → <i>avrò</i>, andare → <i>andrò</i>, fare → <i>farò</i>.</li><li><b>Condizionale</b>: <i>vorrei, potrei, sarebbe</i> → cortesía y deseos.</li><li><b>Se + congiuntivo imperfetto → condizionale</b>: <i>Se avessi tempo, viaggerei.</i></li></ul>`,
+x:[["Domani ___ a Roma. (andare)",["andrò","vado","andavo"],0,"Futuro irregular: andrò."],
+["Noi ___ l'italiano. (imparare, futuro)",["impareremo","impariamo","imparavamo"],0,"imparare → impareremo."],
+["___ un caffè, per favore. (cortés)",["Vorrei","Voglio","Volevo"],0,"Condizionale de cortesía."],
+["Se avessi soldi, ___ il mondo.",["viaggerei","viaggerò","viaggio"],0,"Se + congiuntivo imperfetto → condizionale."],
+["Lei ___ medico. (essere, futuro)",["sarà","sarebbe","è"],0,"Futuro de essere: sarà."]]},
+r:{t:'Il mio futuro',s:`Tra cinque anni mi laureerò in commercio internazionale. Spero di lavorare in un'azienda all'estero. Se potessi scegliere, sceglierei l'Italia, perché amo la cultura e la lingua.`,es:`Dentro de cinco años me graduaré en comercio internacional. Espero trabajar en una empresa en el extranjero. Si pudiera elegir, elegiría Italia, porque amo la cultura y la lengua.`,q:[["¿Qué estudia?",["Comercio internacional","Medicina","Arte"],0],["¿Qué país elegiría?",["Italia","Francia","Canadá"],0]]},
+w:{p:'Escribe 3 frases sobre tu futuro (futuro) y 2 deseos (condizionale). Mínimo 5 frases.',m:`Tra dieci anni lavorerò in una grande azienda. Abiterò a Roma. Viaggerò molto. Vorrei parlare cinque lingue. Sarebbe un sogno.`,k:["sarò","farò","vorrei","sarebbe"],n:40}});
+
+U('it','b2','Opinioni: il congiuntivo',{e:'⚖️',
+v:`penso che|pienso que|Penso che sia una buona idea.|Pienso que es una buena idea.
+credo che|creo que|Credo che lui abbia ragione.|Creo que él tiene razón.
+benché|aunque|Benché sia tardi, continuo.|Aunque sea tarde, sigo.
+affinché|para que|Te lo spiego affinché tu capisca.|Te lo explico para que entiendas.
+a meno che|a menos que|Vengo, a meno che piova.|Voy, a menos que llueva.
+sebbene|aunque|Sebbene sia stanco, lavora.|Aunque esté cansado, trabaja.
+è importante che|es importante que|È importante che tu venga.|Es importante que vengas.
+spero che|espero que|Spero che tu stia bene.|Espero que estés bien.`,
+l:`Penso che tu abbia ragione.|Pienso que tienes razón.
+Voglio che tu sia felice.|Quiero que seas feliz.`,
+g:{t:'Il congiuntivo presente',h:`<p><b>-are</b>: che io parl<b>i</b> (las tres personas del singular iguales). <b>-ere / -ire</b>: che io prend<b>a</b>, dorm<b>a</b>.</p><p><b>Irregulares clave:</b> essere → <i>sia</i>, avere → <i>abbia</i>, andare → <i>vada</i>, fare → <i>faccia</i>, potere → <i>possa</i>, stare → <i>stia</i>.</p><p><b>Se usa tras:</b> opinión (penso che), duda, deseo (spero che), emoción, y conjunciones como <i>benché, affinché, a meno che</i>. Con certeza («so che») va indicativo.</p>`,
+x:[["Penso che lui ___ ragione. (avere)",["ha","abbia","avrà"],1,"penso che → congiuntivo."],
+["È importante che tu ___ puntuale. (essere)",["sei","sia","sarai"],1,"è importante che → congiuntivo."],
+["Benché ___ tardi, continuo. (essere)",["è","sia","sarà"],1,"benché → congiuntivo."],
+["Spero che voi ___ bene. (stare)",["state","stiate","starete"],1,"spero che → congiuntivo."],
+["So che lui ___ qui. (abitare)",["abiti","abita","abiterebbe"],1,"«so che» (certeza) → indicativo."]]},
+r:{t:'Il colloquio',s:`Per riuscire a un colloquio di lavoro, è importante che tu sia preparato. Penso che sia utile conoscere l'azienda e fare domande. Benché sia stressante, è meglio che tu resti calmo.`,es:`Para tener éxito en una entrevista de trabajo, es importante que estés preparado. Pienso que es útil conocer la empresa y hacer preguntas. Aunque sea estresante, es mejor que te mantengas tranquilo.`,q:[["¿Qué es útil?",["Conocer la empresa","Llegar tarde","Hablar poco"],0],["¿Qué conviene mantener?",["La calma","El silencio","La prisa"],0]]},
+w:{p:'Escribe 4 consejos para un amigo usando el congiuntivo (penso che…, è importante che…, voglio che…). Mínimo 4 frases.',m:`Penso che tu debba studiare ogni giorno. È importante che tu sia paziente. Voglio che tu riesca. Benché sia difficile, è meglio che tu continui.`,k:["Penso che","È importante che","Voglio che","Benché"],n:35}});
+
+U('it','b2','Argomentare: connettivi e pronomi',{e:'🧠',
+v:`tuttavia|sin embargo|È giovane; tuttavia è molto maturo.|Es joven; sin embargo, es muy maduro.
+quindi|por lo tanto|Penso, quindi sono.|Pienso, luego existo.
+infatti|de hecho|Infatti, hai ragione.|De hecho, tienes razón.
+inoltre|además|Inoltre, costa poco.|Además, cuesta poco.
+nonostante|a pesar de|Nonostante la pioggia, usciamo.|A pesar de la lluvia, salimos.
+perciò|por eso|Ero stanco, perciò sono rimasto a casa.|Estaba cansado, por eso me quedé en casa.
+comunque|de todos modos|Comunque, grazie.|De todos modos, gracias.
+dunque|así que|Dunque, che cosa facciamo?|Entonces, ¿qué hacemos?`,
+l:`Te lo dico domani.|Te lo digo mañana.
+Glielo spiego io.|Yo se lo explico.`,
+g:{t:'Pronombres combinados',h:`<p>Cuando juntas pronombre indirecto + directo, el indirecto cambia: <b>mi → me, ti → te, ci → ce, vi → ve</b> + lo/la/li/le. Y <b>gli / le → glie-</b> (todo junto: <i>glielo</i>).</p><ul><li><i>Mi dai il libro? Sì, <b>te lo</b> do.</i></li><li><i>Do il regalo a Maria → <b>Glielo</b> do.</i></li><li><i>Mi presti la penna? Sì, <b>te la</b> presto.</i></li></ul>`,
+x:[["Mi dai il libro? Sì, ___ do.",["te lo","me lo","lo ti"],0,"ti → te + lo."],
+["Ti racconto la storia. → ___ racconto.",["Te la","Ti la","La te"],0,"ti + la → te la."],
+["Do il regalo a Maria. → ___ do.",["Glielo","Lo gli","Le lo"],0,"a Maria (le) + lo → glielo."],
+["Ci porti il conto? Sì, ___ porto.",["ve lo","ce lo","ti lo"],0,"ci (a voi) → ve lo."],
+["Mi presti la penna? Sì, ___ presto.",["te la","me la","la te"],0,"ti + la → te la."]]},
+r:{t:'Il commercio internazionale',s:`Il mercato internazionale cambia velocemente. Infatti, molte aziende cercano nuovi clienti all'estero. Tuttavia, esportare non è semplice: bisogna conoscere le regole doganali. Quindi la formazione è essenziale.`,es:`El mercado internacional cambia rápidamente. De hecho, muchas empresas buscan nuevos clientes en el extranjero. Sin embargo, exportar no es sencillo: hay que conocer las reglas aduaneras. Por lo tanto, la formación es esencial.`,q:[["¿Qué es esencial?",["La formación","El azar","El precio"],0],["¿Qué hay que conocer?",["Las reglas aduaneras","Los horarios","La moda"],0]]},
+w:{p:'Escribe 4 frases argumentando con tuttavia, infatti, quindi, nonostante.',m:`Imparare una lingua è difficile; tuttavia è molto utile. Infatti si può lavorare all'estero. Nonostante le difficoltà, continuo. Quindi pratico ogni giorno.`,k:["tuttavia","infatti","quindi","nonostante"],n:40}});
+</script>
+<script>/* COREANO A1–B2  (formato vocab: palabra|significado|ejemplo|traducción|romanización) */
+U('ko','a1','한글: el alfabeto coreano',{e:'🔤',
+v:`ㅏ|Vocal «a» (como en casa)|아이|niño / niña|a
+ㅗ|Vocal «o» (como en oso)|오이|pepino|o
+ㅜ|Vocal «u» (como en luna)|우유|leche|u
+ㅣ|Vocal «i» (como en isla)|이|diente / dos|i
+ㄱ|Consonante «g / k»|가수|cantante|g / k
+ㄴ|Consonante «n»|나무|árbol|n
+ㅁ|Consonante «m»|마음|corazón / mente|m
+ㅅ|Consonante «s»|사과|manzana|s`,
+l:`가수|cantante
+나무|árbol`,
+g:{t:'Cómo se arma una sílaba en hangul',h:`<p>El hangul se escribe en <b>bloques de sílaba</b>: consonante + vocal (+ consonante final llamada <i>batchim</i>).</p><ul><li>Vocales <b>verticales</b> (ㅏ ㅣ) van a la <b>derecha</b>: ㄱ + ㅏ = <b>가</b> (ga).</li><li>Vocales <b>horizontales</b> (ㅗ ㅜ ㅡ) van <b>debajo</b>: ㅁ + ㅗ = <b>모</b> (mo).</li><li><b>ㅇ</b> al inicio es <b>muda</b>: ㅇ + ㅏ = <b>아</b> (a). Al final suena «ng».</li></ul><p>Truco: lee cada bloque de izquierda a derecha y de arriba hacia abajo. ¡Aprender hangul toma solo un día; dominarlo, práctica!</p>`,
+x:[["¿Qué sílaba suena «ga»?",["가","나","마"],0,"ㄱ + ㅏ = 가."],
+["¿Qué sílaba suena «na»?",["사","나","오"],1,"ㄴ + ㅏ = 나."],
+["ㅁ + ㅏ = ?",["마","모","무"],0,"ㅁ (m) + ㅏ (a) = 마 (ma)."],
+["¿Cómo se lee 오이?",["o-i","a-i","u-i"],0,"ㅇ muda + ㅗ = o; ㅇ muda + ㅣ = i."],
+["¿Cómo se lee 우유?",["u-yu","o-yu","i-yu"],0,"우 = u, 유 = yu."]]},
+r:{t:'Leer en hangul',s:`가수가 사과를 먹어요.`,es:`El cantante come una manzana.`,q:[["¿Quién come?",["El cantante","El árbol","El niño"],0],["¿Qué come?",["Pepino","Manzana","Leche"],1]]},
+w:{p:'Con el teclado coreano de tu teléfono (o a mano en papel), escribe estas palabras: 아이, 오이, 우유, 가수, 나무, 사과. Escríbelas aquí separadas por espacios.',m:`아이 오이 우유 가수 나무 사과`,k:["아이","우유","사과"],n:5}});
+
+U('ko','a1','Saludos y presentación',{e:'👋',
+v:`안녕하세요|Hola (formal)|안녕하세요, 저는 지민이에요.|Hola, soy Jimin.|annyeonghaseyo
+안녕|Hola / chao (informal)|민지야, 안녕!|¡Minji, hola!|annyeong
+감사합니다|Gracias (formal)|도와줘서 감사합니다.|Gracias por ayudarme.|gamsahamnida
+죄송합니다|Lo siento (formal)|늦어서 죄송합니다.|Lamento llegar tarde.|joesonghamnida
+네|Sí|네, 맞아요.|Sí, es correcto.|ne
+아니요|No|아니요, 괜찮아요.|No, estoy bien.|aniyo
+이름|Nombre|이름이 뭐예요?|¿Cómo te llamas?|ireum
+만나서 반갑습니다|Mucho gusto|만나서 반갑습니다.|Mucho gusto en conocerte.|mannaseo bangapseumnida`,
+l:`저는 학생이에요.|Soy estudiante.
+이름이 뭐예요?|¿Cómo te llamas?`,
+g:{t:'Partículas 은/는 y la cópula 이에요/예요',h:`<p>El coreano pone el <b>verbo al final</b> y usa <b>partículas</b> pegadas a las palabras.</p><ul><li><b>은 / 는</b> = marca el tema («en cuanto a…»): <b>는</b> después de vocal, <b>은</b> después de consonante → 저<b>는</b>, 이름<b>은</b>.</li><li><b>이에요 / 예요</b> = «ser»: <b>예요</b> después de vocal, <b>이에요</b> después de consonante → 의사<b>예요</b>, 학생<b>이에요</b>.</li></ul><p>Ejemplo: 저는 학생이에요. = (Yo) soy estudiante.</p>`,
+x:[["저___ 학생이에요. (yo soy estudiante)",["는","은","가"],0,"저 termina en vocal → 는."],
+["이름___ 민수예요.",["은","는","를"],0,"이름 termina en consonante (ㅁ) → 은."],
+["저는 학생___.",["이에요","예요","은"],0,"학생 termina en consonante → 이에요."],
+["저는 의사___.",["이에요","예요","는"],1,"의사 termina en vocal → 예요."],
+["¿Cómo se dice «no»?",["네","아니요","감사합니다"],1,"아니요 = no."]]},
+r:{t:'지민의 소개',s:`안녕하세요. 저는 지민이에요. 저는 학생이에요. 만나서 반갑습니다.`,es:`Hola. Soy Jimin. Soy estudiante. Mucho gusto en conocerte.`,q:[["¿Cómo se llama?",["Jimin","Minsu","Minji"],0],["¿Qué es?",["Estudiante","Médico","Cantante"],0]]},
+w:{p:'Preséntate en coreano (teclado coreano o a mano): 안녕하세요. 저는 ___이에요/예요. 학생이에요. 만나서 반갑습니다.',m:`안녕하세요. 저는 수아예요. 저는 학생이에요. 만나서 반갑습니다.`,k:["안녕하세요","저는","이에요","예요"],n:6}});
+
+U('ko','a2','Comida y compras',{e:'🍜',
+v:`물|Agua|물 주세요.|Agua, por favor.|mul
+밥|Arroz / comida|밥을 먹어요.|Como arroz (comida).|bap
+커피|Café|커피를 마셔요.|Tomo café.|keopi
+맛있다|Estar rico|이 음식은 맛있어요.|Esta comida está rica.|masitda
+얼마예요?|¿Cuánto cuesta?|이거 얼마예요?|¿Cuánto cuesta esto?|eolmayeyo
+주세요|Deme, por favor|김치 주세요.|Kimchi, por favor.|juseyo
+비싸다|Ser caro|너무 비싸요.|Es demasiado caro.|bissada
+싸다|Ser barato|이 가게는 싸요.|Esta tienda es barata.|ssada`,
+l:`커피 한 잔 주세요.|Un café, por favor.
+이거 맛있어요.|Esto está rico.`,
+g:{t:'Partícula de objeto 을/를 y «주세요»',h:`<p>La partícula <b>을 / 를</b> marca el <b>objeto directo</b>: <b>를</b> después de vocal, <b>을</b> después de consonante.</p><ul><li>커피<b>를</b> 마셔요. (Tomo café.)</li><li>밥<b>을</b> 먹어요. (Como arroz.)</li></ul><p>Para pedir algo: <b>sustantivo + 주세요</b> → 물 주세요 (Agua, por favor). Para preguntar el precio: <b>얼마예요?</b></p>`,
+x:[["커피___ 마셔요.",["를","을","는"],0,"커피 termina en vocal → 를."],
+["밥___ 먹어요.",["를","을","가"],1,"밥 termina en consonante → 을."],
+["물 ___.",["주세요","마셔요","비싸요"],0,"주세요 = deme, por favor."],
+["이거 ___? (¿cuánto cuesta?)",["얼마예요","뭐예요","어디예요"],0,"얼마예요 = ¿cuánto cuesta?"],
+["«Es barato» =",["싸요","비싸요","맛있어요"],0,"싸요 = es barato."]]},
+r:{t:'커피 한 잔',s:`저는 커피를 마셔요. 커피는 맛있어요. 커피는 삼천 원이에요. 싸요.`,es:`Yo tomo café. El café está rico. El café cuesta tres mil wones. Es barato.`,q:[["¿Qué toma?",["Café","Agua","Leche"],0],["¿Cómo es el café?",["Barato","Caro","Amargo"],0]]},
+w:{p:'Escribe 3 frases en coreano: qué comes o bebes y si está rico (usa 을/를).',m:`저는 밥을 먹어요. 저는 커피를 마셔요. 커피는 맛있어요.`,k:["을","를","맛있어요"],n:6}});
+
+U('ko','a2','Rutina diaria',{e:'⏰',
+v:`아침|Mañana / desayuno|아침에 일어나요.|Me levanto por la mañana.|achim
+점심|Mediodía / almuerzo|점심을 먹어요.|Almuerzo.|jeomsim
+저녁|Tarde-noche / cena|저녁에 공부해요.|Estudio por la noche.|jeonyeok
+공부하다|Estudiar|저는 한국어를 공부해요.|Estudio coreano.|gongbuhada
+일하다|Trabajar|언니는 회사에서 일해요.|Mi hermana trabaja en una empresa.|ilhada
+자다|Dormir|밤에 자요.|Duermo de noche.|jada
+먹다|Comer|저는 밥을 먹어요.|Yo como arroz.|meokda
+가다|Ir|학교에 가요.|Voy a la escuela.|gada`,
+l:`몇 시예요?|¿Qué hora es?
+저는 매일 한국어를 공부해요.|Estudio coreano todos los días.`,
+g:{t:'Presente cortés: -아요 / -어요',h:`<p>Quita <b>다</b> del verbo y agrega:</p><ul><li>última vocal <b>ㅏ / ㅗ</b> → <b>-아요</b>: 가다 → <b>가요</b>, 오다 → <b>와요</b></li><li>otras vocales → <b>-어요</b>: 먹다 → <b>먹어요</b>, 읽다 → <b>읽어요</b></li><li><b>하다</b> → <b>해요</b>: 공부하다 → <b>공부해요</b></li></ul><p>Es la forma cortés más usada en el día a día. La partícula <b>에</b> marca lugar de destino y tiempo: 학교<b>에</b> 가요, 아침<b>에</b>.</p>`,
+x:[["가다 → ___",["가요","가어요","갑니"],0,"가 termina en ㅏ + 아요 → 가요."],
+["먹다 → ___",["먹아요","먹어요","먹요"],1,"먹 (vocal ㅓ) → 먹어요."],
+["공부하다 → ___",["공부해요","공부하어요","공부하요"],0,"하다 → 해요."],
+["자다 → ___",["자요","자어요","잡아요"],0,"자 → 자요."],
+["«Voy a la escuela» =",["학교에 가요","학교에 먹어요","학교에 자요"],0,"가다 = ir."]]},
+r:{t:'하루',s:`저는 아침에 일어나요. 점심을 먹어요. 저녁에 공부해요. 밤에 자요.`,es:`Me levanto por la mañana. Almuerzo. Estudio por la tarde-noche. Duermo de noche.`,q:[["¿Cuándo estudia?",["En la tarde-noche","Por la mañana","Al mediodía"],0],["¿Qué hace de noche?",["Dormir","Trabajar","Cocinar"],0]]},
+w:{p:'Escribe tu rutina en coreano con 4 verbos (먹어요, 가요, 공부해요, 자요…).',m:`저는 아침에 학교에 가요. 점심을 먹어요. 저녁에 공부해요. 밤에 자요.`,k:["가요","먹어요","공부해요","자요"],n:8}});
+
+U('ko','b1','Pasado y planes',{e:'🗓️',
+v:`어제|Ayer|어제 친구를 만났어요.|Ayer me encontré con un amigo.|eoje
+내일|Mañana|내일 시험이 있어요.|Mañana tengo un examen.|naeil
+주말|Fin de semana|주말에 뭐 해요?|¿Qué haces el fin de semana?|jumal
+여행|Viaje|여행을 가고 싶어요.|Quiero ir de viaje.|yeohaeng
+친구|Amigo/a|친구랑 영화를 봤어요.|Vi una película con una amiga.|chingu
+영화|Película|이 영화는 재미있어요.|Esta película es divertida.|yeonghwa
+만나다|Encontrarse|내일 만날 거예요.|Nos encontraremos mañana.|mannada
+계획|Plan|주말 계획이 있어요?|¿Tienes planes para el fin de semana?|gyehoek`,
+l:`어제 뭐 했어요?|¿Qué hiciste ayer?
+내일 같이 영화 볼까요?|¿Vemos una película juntos mañana?`,
+g:{t:'Pasado -았/었어요 y futuro -(으)ㄹ 거예요',h:`<ul><li><b>Pasado:</b> mismo criterio de vocales que el presente pero con <b>-았어요 / -었어요</b>: 가다 → <b>갔어요</b>, 먹다 → <b>먹었어요</b>, 하다 → <b>했어요</b>.</li><li><b>Futuro / plan:</b> raíz + <b>-ㄹ 거예요</b> (si termina en vocal) o <b>-을 거예요</b> (si termina en consonante): 가다 → <b>갈 거예요</b>, 먹다 → <b>먹을 거예요</b>, 공부하다 → <b>공부할 거예요</b>.</li></ul>`,
+x:[["어제 학교에 ___.",["갔어요","갈 거예요","가요"],0,"어제 = ayer → pasado."],
+["내일 친구를 ___.",["만났어요","만날 거예요","만나었어요"],1,"내일 = mañana → futuro."],
+["어제 밥을 ___.",["먹었어요","먹을 거예요","먹어요"],0,"Pasado de 먹다."],
+["저는 지난주에 영화를 ___. (지난주 = semana pasada)",["봤어요","볼 거예요","봐요"],0,"Pasado de 보다 → 봤어요."],
+["«Voy a estudiar» =",["공부할 거예요","공부했어요","공부해요"],0,"Plan futuro."]]},
+r:{t:'어제와 내일',s:`어제는 친구를 만났어요. 우리는 영화를 봤어요. 영화는 재미있었어요. 내일은 가족을 만날 거예요.`,es:`Ayer me encontré con una amiga. Vimos una película. La película fue divertida. Mañana me encontraré con mi familia.`,q:[["¿Qué hizo ayer?",["Vio una película con una amiga","Estudió","Viajó"],0],["¿Con quién se verá mañana?",["Con su familia","Con su amiga","Con su profesor"],0]]},
+w:{p:'Escribe 2 frases sobre ayer (pasado) y 2 sobre mañana (futuro) en coreano.',m:`어제 친구를 만났어요. 영화를 봤어요. 내일 공부할 거예요. 주말에 여행 갈 거예요.`,k:["어제","내일","했어요","할 거예요"],n:8}});
+
+U('ko','b1','Conectar ideas y dar razones',{e:'🔗',
+v:`그리고|Y / además|저는 커피를 마셔요. 그리고 책을 읽어요.|Tomo café. Y leo un libro.|geurigo
+그런데|Pero / por cierto|그런데 오늘 뭐 해요?|Por cierto, ¿qué haces hoy?|geureonde
+그래서|Por eso|피곤해요. 그래서 일찍 잘 거예요.|Estoy cansado, por eso dormiré temprano.|geuraeseo
+하지만|Pero|비싸요. 하지만 맛있어요.|Es caro, pero rico.|hajiman
+왜냐하면|Porque|왜냐하면 시간이 없어요.|Porque no tengo tiempo.|waenyahamyeon
+때문에|Por (causa de)|시험 때문에 바빠요.|Estoy ocupado por el examen.|ttaemune
+만약|Si (hipotético)|만약 비가 오면 집에 있을 거예요.|Si llueve, me quedaré en casa.|manyak
+아마|Quizás|아마 내일 갈 거예요.|Quizás vaya mañana.|ama`,
+l:`왜 한국어를 공부해요?|¿Por qué estudias coreano?
+드라마를 좋아해서 공부해요.|Estudio porque me gustan los dramas.`,
+g:{t:'Conectores y terminaciones: -고, -지만, -아서/어서, -(으)면',h:`<ul><li><b>-고</b> = y (secuencia): 밥을 먹<b>고</b> 커피를 마셔요.</li><li><b>-지만</b> = pero: 비싸<b>지만</b> 맛있어요.</li><li><b>-아서/어서</b> = porque / así que: 피곤해<b>서</b> 일찍 잤어요.</li><li><b>-(으)면</b> = si: 비가 오<b>면</b> 집에 있을 거예요.</li></ul><p>Entre oraciones: 그리고 (y), 그래서 (por eso), 하지만 (pero), 그런데 (pero / por cierto).</p>`,
+x:[["비싸요. ___ 맛있어요.",["하지만","그래서","왜냐하면"],0,"Contraste → 하지만."],
+["피곤해요. ___ 일찍 잘 거예요.",["그래서","하지만","그리고"],0,"Causa → 그래서."],
+["비가 오___ 집에 있을 거예요.",["면","고","지만"],0,"-면 = si."],
+["밥을 먹___ 커피를 마셔요.",["고","면","아서"],0,"-고 = y (luego)."],
+["시험 ___ 바빠요.",["때문에","그리고","아마"],0,"때문에 = por causa de."]]},
+r:{t:'한국어 공부',s:`저는 한국어를 좋아해요. 그래서 매일 공부해요. 한국어는 어렵지만 재미있어요. 만약 시간이 있으면 한국 드라마도 볼 거예요.`,es:`Me gusta el coreano. Por eso estudio todos los días. El coreano es difícil pero divertido. Si tengo tiempo, también veré dramas coreanos.`,q:[["¿Por qué estudia cada día?",["Porque le gusta el coreano","Por obligación","Por un examen"],0],["¿Qué hará si tiene tiempo?",["Ver dramas coreanos","Dormir","Cocinar"],0]]},
+w:{p:'Escribe 4 frases usando 그리고, 그래서, 하지만, 만약.',m:`저는 커피를 좋아해요. 그리고 차도 좋아해요. 피곤해요. 그래서 일찍 잘 거예요. 만약 비가 오면 집에 있을 거예요.`,k:["그리고","그래서","하지만","만약"],n:10}});
+
+U('ko','b2','Opiniones y obligaciones',{e:'💭',
+v:`생각|Pensamiento / opinión|제 생각에는 좋은 방법이에요.|En mi opinión, es un buen método.|saenggak
+의견|Opinión|다른 의견이 있어요?|¿Tienes otra opinión?|uigyeon
+중요하다|Ser importante|건강이 가장 중요해요.|La salud es lo más importante.|jungyohada
+필요하다|Ser necesario|연습이 필요해요.|Se necesita práctica.|piryohada
+문화|Cultura|한국 문화에 관심이 있어요.|Me interesa la cultura coreana.|munhwa
+사회|Sociedad|사회가 빨리 변하고 있어요.|La sociedad cambia rápido.|sahoe
+경험|Experiencia|좋은 경험이었어요.|Fue una buena experiencia.|gyeongheom
+환경|Medio ambiente|환경을 보호해야 해요.|Hay que proteger el medio ambiente.|hwangyeong`,
+l:`제 생각에는 그게 맞는 것 같아요.|En mi opinión, creo que eso es correcto.
+더 연습해야 해요.|Hay que practicar más.`,
+g:{t:'Opinar y obligar: -(으)ㄴ/는 것 같다, -아야/어야 하다, -(으)시-',h:`<ul><li><b>-(으)ㄴ/는 것 같다</b> = «parece que / creo que»: 비가 오<b>는 것 같아요</b>.</li><li><b>-아야/어야 하다</b> = «tener que»: 공부해<b>야 해요</b>.</li><li><b>-(으)시-</b> = honorífico (para personas mayores o respetadas): 읽다 → 읽<b>으세요</b>, 가다 → 가<b>세요</b>.</li></ul><p>Fórmula de opinión: <b>제 생각에는</b> + oración + <b>것 같아요</b>.</p>`,
+x:[["비가 오는 ___ 같아요. (parece que llueve)",["것","때","수"],0,"-는 것 같아요 = parece que."],
+["공부해야 ___. (tengo que estudiar)",["해요","가요","와요"],0,"-아야/어야 해요 = tener que."],
+["선생님이 책을 ___. (honorífico: lee)",["읽어요","읽으세요","읽었다"],1,"-(으)세요 = honorífico."],
+["제 ___에는 중요해요. (en mi opinión)",["생각","환경","사과"],0,"제 생각에는 = en mi opinión."],
+["«Se necesita práctica» =",["연습이 필요해요","연습이 맛있어요","연습이 싸요"],0,"필요하다 = ser necesario."]]},
+r:{t:'외국어 공부',s:`제 생각에는 외국어 공부가 정말 중요한 것 같아요. 언어를 배우면 다른 문화도 이해할 수 있어요. 그래서 저는 매일 조금씩 연습해야 해요.`,es:`En mi opinión, estudiar idiomas extranjeros es muy importante. Si aprendes un idioma, también puedes entender otras culturas. Por eso yo tengo que practicar un poco cada día.`,q:[["¿Por qué cree que estudiar idiomas es importante?",["Ayuda a entender otras culturas","Da dinero","Es fácil"],0],["¿Qué debe hacer cada día?",["Practicar un poco","Viajar","Dormir más"],0]]},
+w:{p:'Escribe tu opinión (3-4 frases) sobre aprender idiomas con 제 생각에는 … 것 같아요 y -아야/어야 해요.',m:`제 생각에는 한국어가 재미있는 것 같아요. 매일 연습해야 해요. 문화도 배워야 해요.`,k:["제 생각에는","것 같아요","해야 해요"],n:10}});
+
+U('ko','b2','Estilo K-drama: 반말',{e:'🎬',
+v:`진짜|De verdad|진짜? 대박!|¿En serio? ¡Increíble!|jinjja
+대박|¡Wow! / genial|대박, 너무 좋아!|¡Wow, qué genial!|daebak
+어떡해|¿Qué hago? / ¡Ay no!|어떡해, 늦었어!|¡Ay no, llegué tarde!|eotteokhae
+괜찮아|Está bien / tranquilo|괜찮아, 걱정하지 마.|Tranquilo, no te preocupes.|gwaenchana
+미안해|Lo siento (informal)|늦어서 미안해.|Perdón por llegar tarde.|mianhae
+고마워|Gracias (informal)|도와줘서 고마워.|Gracias por ayudarme.|gomawo
+알았어|Entendido / ok|응, 알았어.|Sí, entendido.|arasseo
+잠깐만|Espera un momento|잠깐만, 전화 받을게.|Espera, voy a contestar.|jamkkanman`,
+l:`뭐 해?|¿Qué haces?
+밥 먹었어?|¿Ya comiste?`,
+g:{t:'반말 (habla informal) vs 존댓말 (formal)',h:`<p>En los dramas coreanos los amigos cercanos usan <b>반말</b>. Se forma <b>quitando 요</b> a la forma cortés:</p><ul><li>먹어요 → <b>먹어</b>, 가요 → <b>가</b>, 고마워요 → <b>고마워</b>, 괜찮아요 → <b>괜찮아</b></li><li>Formal -습니다 → informal -아/어: 감사합니다 → <b>고마워</b></li></ul><p>⚠️ Solo úsala con amigos de tu edad o menores, ¡nunca con profesores o personas mayores! Ante la duda, usa 존댓말 (-요).</p>`,
+x:[["Informal de «먹어요»",["먹어","먹습니다","먹으세요"],0,"Quita 요 → 먹어."],
+["Informal de «고마워요»",["고마워","고맙습니다","고마우세요"],0,"Quita 요 → 고마워."],
+["¿Cuál es informal?",["괜찮아","괜찮습니다","괜찮으세요"],0,"괜찮아 es 반말."],
+["Con un profesor mayor debes usar…",["존댓말 (formal)","반말 (informal)","Ambas igual"],0,"Siempre formal con mayores."],
+["«Lo siento» entre amigos",["미안해","죄송합니다","감사합니다"],0,"미안해 = informal."]]},
+r:{t:'친구 사이',s:`A: 어떡해, 늦었어!
+B: 괜찮아, 천천히 와.
+A: 진짜 미안해.
+B: 아니야, 잠깐만 기다릴게.`,es:`A: ¡Ay no, llegué tarde!
+B: Tranquilo, ven despacio.
+A: De verdad, lo siento.
+B: No, espero un momento.`,q:[["¿Qué dice B para tranquilizar?",["괜찮아","대박","어떡해"],0],["¿Quién llegó tarde?",["A","B","Ambos"],0]]},
+w:{p:'Escribe un mini-diálogo informal (반말) de 4 líneas con amigos.',m:`A: 뭐 해? B: 밥 먹어. A: 나도 배고파! B: 같이 먹자!`,k:["해","먹어","고마워","미안해"],n:8}});
+</script>
+<script>/* PROFES, TIPS, CANCIONES ORIGINALES, DESCUBRIR, SERIES */
+window.TEACH={
+ en:{name:'Mr. Oliver',role:'Profe de inglés · Londres',bio:'15 años enseñando inglés a hispanohablantes. Paciencia, humor británico y mucha práctica oral.',icon:'☕'},
+ fr:{name:'Madame Claire',role:'Profe de francés · Lyon',bio:'Ama la gramática elegante, la pronunciación limpia y, por supuesto, los croissants.',icon:'🥐'},
+ it:{name:'Professoressa Giulia',role:'Profe de italiano · Florencia',bio:'Enseña con música, gestos y mucha pasión. Aquí se aprende hablando con las manos.',icon:'🍝'},
+ ko:{name:'Min-ji Seonsaengnim',role:'Profe de coreano · Seúl',bio:'Fan de los dramas y el K-pop. Te lleva del hangul a las conversaciones reales paso a paso.',icon:'🌸'}
+};
+window.TIPS={
+ en:['Escucha inglés 10 minutos al día: el oído se entrena con constancia, no con intensidad.','Aprende frases completas, no palabras sueltas: «I\'d like to…» vale más que «like».','Repite en voz alta imitando la entonación: el ritmo importa tanto como la pronunciación.','Los errores son datos: cada uno te dice qué practicar. ¡Equivócate sin miedo!','Escribe 3 frases al día sobre tu vida: es el entrenamiento más rápido para llegar a B1.'],
+ fr:['En francés casi no se pronuncian las consonantes finales: «petit» suena «petí».','Las liaisons unen sonidos: «les amis» suena «lé-za-mi».','La «r» francesa se hace al fondo de la garganta; practícala con «rouge» y «merci».','Aprende siempre el artículo con el sustantivo: la table, le livre.','Mira series cortas con subtítulos en francés: tu oído se acostumbra rápido.'],
+ it:['En italiano se pronuncia todo como se escribe; las consonantes dobles se alargan: «pala» ≠ «palla».','La «c» suena «ch» ante e/i («ciao») y «k» ante a/o/u («casa»).','Los gestos son parte del idioma: ¡habla con las manos!','Aprende primero los verbos más usados: essere, avere, andare, fare.','«gli» suena como una «ll» fuerte: «famiglia».'],
+ ko:['Hangul se aprende en un día, pero dominarlo exige práctica: escribe sílabas a mano.','En coreano el verbo va siempre al final de la frase.','Habla primero en cortés (-요) y deja la 반말 para amigos cercanos.','Las partículas (은/는, 이/가, 을/를) marcan el rol de cada palabra: ¡son tus mejores amigas!','Escucha K-pop y dramas, pero repite frases cortas en voz alta.']
+};
+window.GENRES=['Pop','Balada','Folk'];
+
+/* Canciones ORIGINALES (creadas para esta app). Formato línea: texto|traducción|romanización */
+window.SONGS=[
+ {id:'en1',lang:'en',genre:'Pop',lvl:'a2',title:'Every Day Is New',by:'Canción original · estilo pop',
+  lines:`Today I wake up with the sun|Hoy despierto con el sol
+I take a breath and I start to run|Respiro hondo y empiezo a correr
+Every day is new, every day is mine|Cada día es nuevo, cada día es mío
+I am learning, step by step, I shine|Estoy aprendiendo, paso a paso, brillo`,
+  vocab:`breath|aliento / respiro
+step|paso
+shine|brillar`},
+ {id:'en2',lang:'en',genre:'Balada',lvl:'b1',title:'Slow Down, Moon',by:'Canción original · estilo balada',
+  lines:`The city sleeps under silver light|La ciudad duerme bajo luz plateada
+I count the stars and I think of you|Cuento las estrellas y pienso en ti
+If you were here, I would hold your hand|Si estuvieras aquí, tomaría tu mano
+And we would dance until the morning comes|Y bailaríamos hasta que llegue la mañana`,
+  vocab:`silver|plateado
+hold|sostener
+until|hasta que`},
+ {id:'en3',lang:'en',genre:'Folk',lvl:'b1',title:'Dusty Road Home',by:'Canción original · estilo folk/country',
+  lines:`I'm riding home on a dusty road|Voy a casa por un camino polvoriento
+With a guitar and a heavy load|Con una guitarra y una carga pesada
+I've been away for a year or two|He estado lejos uno o dos años
+But my heart has always been with you|Pero mi corazón siempre ha estado contigo`,
+  vocab:`dusty|polvoriento
+load|carga
+away|lejos`},
+ {id:'fr1',lang:'fr',genre:'Pop',lvl:'a2',title:'Chaque matin',by:'Canción original · estilo pop',
+  lines:`Chaque matin je me lève, le ciel est bleu|Cada mañana me levanto, el cielo es azul
+J'ai un café, un sourire et un rêve|Tengo un café, una sonrisa y un sueño
+Je chante dans la rue, je ne suis pas seule|Canto en la calle, no estoy sola
+La vie est belle quand on est heureux|La vida es bella cuando uno es feliz`,
+  vocab:`le ciel|el cielo
+le sourire|la sonrisa
+le rêve|el sueño
+heureux|feliz`},
+ {id:'fr2',lang:'fr',genre:'Balada',lvl:'b1',title:'Sous la pluie',by:'Canción original · estilo chanson',
+  lines:`Il pleut sur Paris ce soir|Llueve sobre París esta noche
+Je marche seule le long de la Seine|Camino sola a lo largo del Sena
+Si tu étais là, je ne serais pas triste|Si estuvieras aquí, no estaría triste
+On danserait sous la pluie jusqu'à demain|Bailaríamos bajo la lluvia hasta mañana`,
+  vocab:`la pluie|la lluvia
+marcher|caminar
+triste|triste`},
+ {id:'fr3',lang:'fr',genre:'Folk',lvl:'a2',title:'Le petit marché',by:'Canción original · estilo folk',
+  lines:`Au petit marché du dimanche|En el mercadito del domingo
+On achète du pain et des fleurs|Se compra pan y flores
+Les enfants courent, les voisins parlent|Los niños corren, los vecinos hablan
+Et le soleil chante avec nous|Y el sol canta con nosotros`,
+  vocab:`le marché|el mercado
+les fleurs|las flores
+courir|correr`},
+ {id:'it1',lang:'it',genre:'Pop',lvl:'a1',title:'Ogni giorno',by:'Canción original · estilo pop',
+  lines:`Ogni giorno mi sveglio e sorrido|Cada día me despierto y sonrío
+Il mare è vicino, il cielo è blu|El mar está cerca, el cielo es azul
+Voglio cantare, voglio ballare|Quiero cantar, quiero bailar
+La vita è bella con te|La vida es bella contigo`,
+  vocab:`sorridere|sonreír
+il mare|el mar
+ballare|bailar`},
+ {id:'it2',lang:'it',genre:'Balada',lvl:'b1',title:'Luna di Roma',by:'Canción original · estilo balada',
+  lines:`Cammino da solo per le vie di Roma|Camino solo por las calles de Roma
+La luna è alta e penso a te|La luna está alta y pienso en ti
+Se tu fossi qui, ti prenderei la mano|Si estuvieras aquí, te tomaría la mano
+E balleremmo fino al mattino|Y bailaríamos hasta la mañana`,
+  vocab:`la via|la calle
+la luna|la luna
+la mano|la mano`},
+ {id:'it3',lang:'it',genre:'Folk',lvl:'a2',title:'La nonna e la pasta',by:'Canción original · estilo folk',
+  lines:`La nonna prepara la pasta|La abuela prepara la pasta
+La cucina profuma di casa|La cocina huele a hogar
+Si mangia insieme, si ride forte|Se come juntos, se ríe fuerte
+La domenica è una festa|El domingo es una fiesta`,
+  vocab:`la nonna|la abuela
+la cucina|la cocina
+ridere|reír`},
+ {id:'ko1',lang:'ko',genre:'Pop',lvl:'a2',title:'오늘도 반짝',by:'Canción original · estilo pop',
+  lines:`오늘도 나는 웃어요|Hoy también sonrío|oneuldo naneun useoyo
+하늘이 참 예뻐요|El cielo es muy bonito|haneuri cham yeppeoyo
+나는 매일 조금씩 배워요|Cada día aprendo un poquito|naneun maeil jogeumssik baewoyo
+내일은 더 반짝일 거예요|Mañana brillaré más|naeireun deo banjjagil georeyo`,
+  vocab:`하늘|cielo
+예쁘다|ser bonito
+배우다|aprender`},
+ {id:'ko2',lang:'ko',genre:'Balada',lvl:'b1',title:'비 오는 밤',by:'Canción original · estilo balada',
+  lines:`비가 오는 밤이에요|Es una noche de lluvia|biga oneun bamieyo
+우산 없이 걸어요|Camino sin paraguas|usan eopsi georeoyo
+네가 여기 있다면 좋겠어요|Ojalá estuvieras aquí|nega yeogi itdamyeon jokesseoyo
+우리는 함께 춤을 출 거예요|Bailaremos juntos|urineun hamkke chumeul chul georeyo`,
+  vocab:`비|lluvia
+우산|paraguas
+춤|baile`},
+ {id:'ko3',lang:'ko',genre:'Folk',lvl:'a2',title:'시장 가는 길',by:'Canción original · estilo folk',
+  lines:`시장에 가요, 사과를 사요|Voy al mercado, compro manzanas|sijange gayo, sagwareul sayo
+친구를 만나요, 같이 웃어요|Me encuentro con amigos, reímos juntos|chingureul mannayo, gachi useoyo
+해가 지면 집에 가요|Cuando se pone el sol, voy a casa|haega jimyeon jibe gayo
+오늘도 좋은 하루예요|Hoy también es un buen día|oneuldo joeun haruyeyo`,
+  vocab:`시장|mercado
+해|sol
+집|casa`}
+];
+
+/* Para descubrir: títulos y artistas recomendados (sin letras). t=título, a=artista, g=género, l=nivel sugerido, n=nota */
+window.DISCOVER={
+ en:[
+  {t:'Count on Me',a:'Bruno Mars',g:'Pop',l:'A2',n:'Vocabulario sencillo sobre amistad.'},
+  {t:'Let It Be',a:'The Beatles',g:'Rock',l:'A2',n:'Imperativos y frases cortas, ritmo lento.'},
+  {t:'Stand By Me',a:'Ben E. King',g:'Soul / R&B',l:'A2',n:'Clásico con estructura repetitiva.'},
+  {t:'Perfect',a:'Ed Sheeran',g:'Balada',l:'B1',n:'Narración romántica con tiempos variados.'},
+  {t:'Someone Like You',a:'Adele',g:'Balada',l:'B1',n:'Emociones y pasado perfecto.'},
+  {t:'Take Me Home, Country Roads',a:'John Denver',g:'Country / Folk',l:'A2',n:'Lugares, naturaleza y pronunciación clara.'},
+  {t:'Shake It Off',a:'Taylor Swift',g:'Pop',l:'B1',n:'Ritmo rápido, modismos.'},
+  {t:'Lose Yourself',a:'Eminem',g:'Hip-hop / Rap',l:'B2+',n:'Muy rápido: ideal cuando ya tengas oído.'}
+ ],
+ fr:[
+  {t:'La Vie en rose',a:'Édith Piaf',g:'Chanson',l:'A2',n:'Clásico con vocabulario del amor.'},
+  {t:'Je veux',a:'Zaz',g:'Pop / Jazz',l:'B1',n:'Ritmo ágil, vocabulario cotidiano.'},
+  {t:'Papaoutai',a:'Stromae',g:'Pop / Electro',l:'B1',n:'Letra clara sobre familia y ausencia.'},
+  {t:'Alors on danse',a:'Stromae',g:'Pop / Electro',l:'A2',n:'Estructuras repetitivas.'},
+  {t:'Les Champs-Élysées',a:'Joe Dassin',g:'Chanson',l:'A2',n:'Vocabulario de ciudad y encuentros.'},
+  {t:'Ne me quitte pas',a:'Jacques Brel',g:'Chanson',l:'B2',n:'Poético: imperativos y subjuntivo.'},
+  {t:'Dernière danse',a:'Indila',g:'Pop',l:'B1',n:'Voz clara, emociones.'},
+  {t:'Dommage',a:'Bigflo & Oli',g:'Rap',l:'B2',n:'Narración rápida, vocabulario rico.'}
+ ],
+ it:[
+  {t:'Azzurro',a:'Adriano Celentano',g:'Pop clásico',l:'A2',n:'Vocabulario de estaciones y soledad.'},
+  {t:'Volare',a:'Domenico Modugno',g:'Pop clásico',l:'A1',n:'Frases simples y muy repetidas.'},
+  {t:'L\'italiano',a:'Toto Cutugno',g:'Pop',l:'A2',n:'Retrato de la cultura italiana.'},
+  {t:'Con te partirò',a:'Andrea Bocelli',g:'Balada / Clásico',l:'B1',n:'Futuro y dicción muy clara.'},
+  {t:'Più bella cosa',a:'Eros Ramazzotti',g:'Balada pop',l:'A2',n:'Amor y comparativos.'},
+  {t:'La solitudine',a:'Laura Pausini',g:'Balada',l:'B1',n:'Sentimientos y pasado.'},
+  {t:'Zitti e buoni',a:'Måneskin',g:'Rock',l:'B2',n:'Rock actual con jerga.'},
+  {t:'Bella ciao',a:'Tradicional',g:'Folk',l:'A2',n:'Canción tradicional, vocabulario histórico.'}
+ ],
+ ko:[
+  {t:'Good Day (좋은 날)',a:'IU',g:'Pop / Balada',l:'A2',n:'Melodía clara, vocabulario de sentimientos.'},
+  {t:'Spring Day (봄날)',a:'BTS',g:'K-pop',l:'B1',n:'Poética; ideal para leer con traducción.'},
+  {t:'Palette',a:'IU ft. G-Dragon',g:'Pop',l:'B1',n:'Letra conversacional sobre crecer.'},
+  {t:'How You Like That',a:'BLACKPINK',g:'K-pop',l:'B1',n:'Mezcla coreano/inglés.'},
+  {t:'Gangnam Style (강남스타일)',a:'PSY',g:'K-pop',l:'A2',n:'Muy repetitiva; vocabulario de barrio.'},
+  {t:'Hype Boy',a:'NewJeans',g:'K-pop',l:'A2',n:'Frases cortas y muy repetidas.'},
+  {t:'Beautiful (아름다운)',a:'Crush',g:'OST / Balada',l:'B1',n:'Del drama «Goblin».'},
+  {t:'Fly',a:'Epik High',g:'Hip-hop',l:'B2',n:'Rap rítmico, buen reto de oído.'}
+ ]
+};
+
+/* Habla conectada: heard|full|ejemplo|es */
+window.SPEECH={
+ en:{intro:'En las series nadie habla «como en el libro». Estas reducciones son lo primero que debes aprender a reconocer.',items:`gonna|going to|I'm gonna call you later.|Te voy a llamar luego.
+wanna|want to|I wanna go home.|Quiero ir a casa.
+gotta|have got to|I gotta leave now.|Tengo que irme ya.
+dunno|don't know|I dunno what to say.|No sé qué decir.
+lemme|let me|Lemme check my phone.|Déjame revisar mi teléfono.
+kinda|kind of|It's kinda cold today.|Hace como frío hoy.`},
+ fr:{intro:'El francés hablado «se come» letras: aprende estas contracciones para entender series y conversaciones reales.',items:`j'sais pas|je ne sais pas|J'sais pas ce que je veux.|No sé lo que quiero.
+t'as|tu as|T'as faim ?|¿Tienes hambre?
+y'a|il y a|Y'a un problème.|Hay un problema.
+chuis|je suis|Chuis fatigué.|Estoy cansado.
+p'têtre|peut-être|P'têtre demain.|Quizás mañana.
+du coup|por eso / entonces|Du coup, on y va ?|Entonces, ¿vamos?`},
+ it:{intro:'En italiano hablado hay muletillas y expresiones muy cortas que usarás en cada serie.',items:`boh|non lo so|Boh, non lo so.|Ni idea.
+magari|ojalá / tal vez|Magari domani!|¡Ojalá mañana!
+figurati|de nada / ni lo menciones|Grazie! — Figurati!|¡Gracias! — ¡De nada!
+insomma|en fin / regular|Com'è? — Insomma.|¿Cómo está? — Más o menos.
+dai|vamos / anda|Dai, andiamo!|¡Vamos, anda!
+mica|(refuerza la negación)|Non è mica difficile.|No es nada difícil.`},
+ ko:{intro:'Los dramas coreanos usan habla informal y expresiones cortas. Aprende estas y tu oído mejorará muy rápido.',items:`뭐 해?|뭐 해요?|뭐 해? 지금 어디야?|¿Qué haces? ¿Dónde estás?
+몰라|모르겠어|몰라, 진짜.|No sé, de verdad.
+어떡해|어떻게 해|어떡해, 늦었어!|¡Ay no, llegué tarde!
+진짜?|¿De verdad?|진짜? 대박!|¿En serio? ¡Increíble!
+괜찮아|está bien|괜찮아, 걱정 마.|Tranquilo, no te preocupes.
+잠깐만|espera un momento|잠깐만, 전화 받을게.|Espera, voy a contestar.`}
+};
+
+/* Escenas: lines "Quien: texto | traducción" ; q preguntas */
+window.SCENES=[
+ {id:'sc-en1',lang:'en',lvl:'A2',title:'At the coffee shop',lines:`Sam: Hey, long time no see! How have you been?|¡Hey, cuánto tiempo! ¿Cómo has estado?
+Mia: Pretty good, thanks. I'm just trying to catch up on work.|Bastante bien, gracias. Solo intento ponerme al día con el trabajo.
+Sam: Same here. Do you want to grab a coffee?|Igual yo. ¿Quieres tomar un café?
+Mia: Sure! I'm dying for one.|¡Claro! Me muero por uno.
+Sam: My treat. What do you want?|Invito yo. ¿Qué quieres?
+Mia: A latte, please. Thanks, you're the best!|Un latte, por favor. ¡Gracias, eres lo máximo!`,
+  q:[["What does Sam offer?",["To buy a coffee","A job","A ride"],0],["«I'm dying for one» means…",["Quiero uno con muchas ganas","Me voy a morir","Odio el café"],0]]},
+ {id:'sc-en2',lang:'en',lvl:'B1',title:'A tough day',lines:`Alex: You look exhausted. What happened?|Te ves agotado. ¿Qué pasó?
+Jo: Don't ask. My boss dumped a huge project on me.|Ni preguntes. Mi jefe me echó encima un proyecto enorme.
+Alex: Seriously? That's so unfair.|¿En serio? Qué injusto.
+Jo: I know, right? I'm gonna need a break.|¿Verdad? Voy a necesitar un descanso.
+Alex: Why don't you take tomorrow off?|¿Por qué no te tomas mañana libre?
+Jo: I can't. I've got a deadline to meet.|No puedo. Tengo una fecha límite que cumplir.`,
+  q:[["Why is Jo tired?",["A huge project","A long trip","A party"],0],["«gonna» means…",["going to","gone to","got to"],0]]},
+ {id:'sc-fr1',lang:'fr',lvl:'A2',title:'Au café',lines:`Léa: Salut ! Ça va ?|¡Hola! ¿Qué tal?
+Tom: Ça va, et toi ? T'as passé un bon week-end ?|Bien, ¿y tú? ¿Pasaste un buen fin de semana?
+Léa: Super ! Je suis allée au cinéma avec des amis.|¡Genial! Fui al cine con amigos.
+Tom: Ah cool ! Vous avez vu quoi ?|¡Qué bien! ¿Qué vieron?
+Léa: Une comédie française. C'était trop drôle !|Una comedia francesa. ¡Era muy graciosa!
+Tom: Il faut que je la voie, alors.|Entonces tengo que verla.`,
+  q:[["¿Qué hizo Léa?",["Fue al cine","Estudió","Viajó"],0],["«T'as» es la forma hablada de…",["tu as","tu es","tu vas"],0]]},
+ {id:'sc-fr2',lang:'fr',lvl:'B1',title:'Un rendez-vous',lines:`Claire: Allô ? Je suis en retard, désolée !|¿Aló? ¡Estoy atrasada, perdón!
+Marc: Pas de souci. Je t'attends devant le café.|No hay problema. Te espero frente al café.
+Claire: J'arrive dans dix minutes, je cherche un taxi.|Llego en diez minutos, busco un taxi.
+Marc: Prends ton temps, y'a pas le feu !|Tómate tu tiempo, ¡no hay prisa!
+Claire: Merci, t'es sympa. À tout de suite !|Gracias, eres amable. ¡Hasta ahora!
+Marc: À tout de suite.|Hasta ahora.`,
+  q:[["«Y'a pas le feu» significa…",["No hay prisa","Hay un incendio","No hay fuego en la cocina"],0],["¿Dónde espera Marc?",["Frente al café","En casa","En la estación"],0]]},
+ {id:'sc-it1',lang:'it',lvl:'A2',title:'Al bar',lines:`Giulia: Ciao Marco! Come stai?|¡Hola Marco! ¿Cómo estás?
+Marco: Bene, grazie! E tu? Che cosa prendi?|¡Bien, gracias! ¿Y tú? ¿Qué tomas?
+Giulia: Un cappuccino, per favore. E tu?|Un capuchino, por favor. ¿Y tú?
+Marco: Un caffè, ma lo prendo al banco.|Un café, pero lo tomo en la barra.
+Giulia: Dai, siediti con me!|¡Anda, siéntate conmigo!
+Marco: Va bene, allora mi siedo.|Está bien, entonces me siento.`,
+  q:[["¿Qué pide Giulia?",["Un capuchino","Un té","Agua"],0],["«Dai» aquí significa…",["Anda / vamos","Gracias","Adiós"],0]]},
+ {id:'sc-it2',lang:'it',lvl:'B1',title:'Che giornata!',lines:`Luca: Sei stanca? Hai una faccia...|¿Estás cansada? Tienes una cara...
+Sara: Boh, non ho dormito per niente.|Ni idea, no dormí nada.
+Luca: Magari dovresti riposare un po'.|Quizás deberías descansar un poco.
+Sara: Magari! Ma ho un esame domani.|¡Ojalá! Pero tengo un examen mañana.
+Luca: Allora in bocca al lupo!|¡Entonces, buena suerte!
+Sara: Crepi! Grazie.|¡Gracias! (respuesta tradicional)`,
+  q:[["«In bocca al lupo» se usa para…",["Desear buena suerte","Pedir comida","Despedirse"],0],["¿Por qué está cansada Sara?",["No durmió","Trabajó mucho","Viajó"],0]]},
+ {id:'sc-ko1',lang:'ko',lvl:'A2',title:'카페에서',lines:`민지: 안녕! 오랜만이야!|¡Hola! ¡Cuánto tiempo!
+지훈: 어, 안녕! 잘 지냈어?|¡Ey, hola! ¿Cómo has estado?
+민지: 응, 잘 지냈어. 커피 마실래?|Sí, bien. ¿Quieres tomar un café?
+지훈: 좋아! 내가 살게.|¡Genial! Yo invito.
+민지: 진짜? 고마워!|¿En serio? ¡Gracias!
+지훈: 뭘 마실래?|¿Qué quieres tomar?`,
+  q:[["¿Qué ofrece 지훈?",["Pagar el café","Irse","Dormir"],0],["«진짜» significa…",["De verdad","Pronto","Mucho"],0]]},
+ {id:'sc-ko2',lang:'ko',lvl:'B1',title:'힘든 하루',lines:`하나: 왜 이렇게 피곤해 보여?|¿Por qué te ves tan cansada?
+유진: 어제 한숨도 못 잤어.|Ayer no dormí nada.
+하나: 대박, 무슨 일 있었어?|Wow, ¿pasó algo?
+유진: 시험 때문에 공부했어.|Estudié por el examen.
+하나: 괜찮아, 잘 볼 거야!|Tranquila, ¡te irá bien!
+유진: 고마워, 힘이 나네!|Gracias, ¡me das fuerzas!`,
+  q:[["«괜찮아» significa…",["Está bien / tranquila","Estoy cansada","Vamos"],0],["¿Por qué estudió 유진?",["Por un examen","Por un viaje","Por trabajo"],0]]}
+];
+
+window.SHOWS={
+ en:['Friends (A2–B1)','Modern Family (B1)','The Office (B1–B2)','Stranger Things (B1)'],
+ fr:['Emily in Paris (A2–B1)','Lupin (B1)','Dix pour cent / Call My Agent (B1–B2)','Les Revenants (B2)'],
+ it:['Skam Italia (A2–B1)','Mare fuori (B1)','L\'amica geniale (B2)','Il commissario Montalbano (B2)'],
+ ko:['Reply 1988 (A2–B1)','Crash Landing on You (B1)','Goblin (B1)','Business Proposal (A2–B1)']
+};
+</script>
+<script>'use strict';
+/* ========== CONFIG ========== */
+const LANGS={
+ en:{name:'Inglés',flag:'🇬🇧',tts:'en-US',color:'#C2548A'},
+ fr:{name:'Francés',flag:'🇫🇷',tts:'fr-FR',color:'#5B6FD6'},
+ it:{name:'Italiano',flag:'🇮🇹',tts:'it-IT',color:'#2F9C78'},
+ ko:{name:'Coreano',flag:'🇰🇷',tts:'ko-KR',color:'#E0705A'}
+};
+const LV=['a1','a2','b1','b2'];
+const LVN={a1:'Principiante',a2:'Básico',b1:'Intermedio',b2:'Int. alto'};
+const ACTS=[['v','Vocabulario','📖'],['g','Gramática','🧩'],['l','Escucha','🎧'],['r','Lectura','📰'],['w','Escritura','✍️'],['s','Habla','🎤']];
+const KEY='academia-idiomas-v1';
+const DEF={lang:'en',xp:0,days:{},streak:0,best:0,last:'',freezes:0,done:{},srs:{},songs:[],badges:{},week:'',weekXp:0,tier:0,goal:30,rate:0.85,diary:[],lvl:{en:'a1',fr:'a1',it:'a1',ko:'a1'},lastRank:null};
+let S=Object.assign({},DEF,(()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}})());
+S.lvl=Object.assign({},DEF.lvl,S.lvl||{});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+/* ========== HELPERS ========== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pad=n=>String(n).padStart(2,'0');
+const ds=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const today=()=>ds(new Date());
+const addDays=(s,n)=>{const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+n);return ds(d)};
+const diff=(a,b)=>Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/864e5);
+const weekStart=()=>{const d=new Date();d.setDate(d.getDate()-((d.getDay()+6)%7));return ds(d)};
+const dayNum=()=>Math.floor(Date.now()/864e5);
+function flash(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(flash.t);flash.t=setTimeout(()=>t.classList.remove('on'),2600)}
+const UM={};Object.keys(C).forEach(l=>LV.forEach(v=>(C[l][v]||[]).forEach(u=>UM[u.id]=u)));
+const allUnits=l=>LV.reduce((a,v)=>a.concat(C[l][v]||[]),[]);
+const doneN=u=>ACTS.filter(a=>(S.done[u.id+':'+a[0]]||0)>=60).length;
+const unitsDone=()=>Object.values(UM).filter(u=>doneN(u)===6).length;
+
+/* ========== TEXT / COMPARE ========== */
+const norm=s=>String(s).toLowerCase().normalize('NFC').replace(/[’‘]/g,"'").replace(/[.,!?¿¡;:"“”«»'\-–—()]/g,'').replace(/\s+/g,' ').trim();
+const strip=s=>norm(s).normalize('NFD').replace(/[̀-ͯ]/g,'');
+function judge(a,b,lang){if(lang==='ko'){a=a.replace(/\s/g,'');b=b.replace(/\s/g,'')}if(norm(a)===norm(b))return 2;if(strip(a)===strip(b))return 1;return 0}
+function lev(a,b){const m=[];for(let i=0;i<=a.length;i++)m[i]=[i];for(let j=1;j<=b.length;j++)m[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return m[a.length][b.length]}
+function sim(a,b){a=strip(a).replace(/\s/g,'');b=strip(b).replace(/\s/g,'');if(!a&&!b)return 1;return 1-lev(a,b)/Math.max(a.length,b.length,1)}
+const isJamo=w=>/^[ㄱ-ㅣ]$/.test(w);
+const sayText=x=>isJamo(x.w)?x.ex:x.w;
+
+/* ========== VOICE ========== */
+let VOICES=[];
+function loadV(){try{VOICES=speechSynthesis.getVoices()}catch(e){}}
+if('speechSynthesis' in window){loadV();speechSynthesis.onvoiceschanged=loadV}
+function pickVoice(code){const pre=code.slice(0,2);const exact=VOICES.filter(v=>v.lang.replace('_','-')===code);const any=VOICES.filter(v=>v.lang.slice(0,2)===pre);return exact.find(v=>/natural|google|premium|enhanced/i.test(v.name))||exact[0]||any[0]}
+function speak(text,lang,rate,pitch,cb){
+ if(!('speechSynthesis' in window)){flash('Tu navegador no tiene voz. Prueba Chrome o Safari.');cb&&cb();return}
+ try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);const code=LANGS[lang||S.lang].tts;u.lang=code;const v=pickVoice(code);if(v)u.voice=v;u.rate=rate||S.rate;u.pitch=pitch||1;if(cb){u.onend=cb;u.onerror=cb}speechSynthesis.speak(u)}catch(e){cb&&cb()}
+}
+
+/* ========== XP / STREAK / WEEK / BADGES ========== */
+const BOTS=['Valentina','Camille','Haru','Giulia','Min-jun','Sofía','Léa','Jin','Emma'];
+const TIERS=['Bronce','Plata','Oro','Zafiro','Rubí','Diamante'];
+const TIERE=['🥉','🥈','🥇','💠','♦️','💎'];
+function hash(s){let h=7;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h}
+function botXp(n,wk,tier,prog){const h=hash(n+wk);const base=160+tier*140+(h%220);return Math.round(base*prog*(0.75+((h>>3)%50)/100))}
+function weekProg(){const d=new Date();const k=(d.getDay()+6)%7;return Math.min(1,(k+d.getHours()/24+0.15)/7)}
+function standings(prog,xp,tier,wk){const rows=BOTS.map(n=>({n,xp:botXp(n,wk,tier,prog)}));rows.push({n:'Tú',xp:xp,me:true});rows.sort((a,b)=>b.xp-a.xp||(a.me?-1:1));return rows}
+function settleWeek(){
+ if(S.weekXp<=0){S.lastRank=null;return}
+ const rows=standings(1,S.weekXp,S.tier,S.week);const rank=rows.findIndex(r=>r.me)+1;
+ let msg='';
+ if(rank<=3&&S.tier<5){S.tier++;msg='🎉 ¡Subiste a la liga '+TIERS[S.tier]+'!'}
+ else if(rank>=8&&S.tier>0){S.tier--;msg='Bajaste a la liga '+TIERS[S.tier]+'. ¡Recupérala esta semana!'}
+ S.lastRank={rank,msg};
+}
+function boot(){
+ const t=today();
+ if(S.last&&S.last!==t){const g=diff(S.last,t);if(g===2&&S.freezes>0){S.freezes--;S.last=addDays(t,-1);setTimeout(()=>flash('❄️ Tu congelador salvó tu racha'),800)}else if(g>1)S.streak=0}
+ const w=weekStart();
+ if(S.week!==w){if(S.week)settleWeek();S.week=w;S.weekXp=0}
+ save();
+}
+function addXP(n){
+ const t=today();
+ if(S.last!==t){S.streak=(S.last&&diff(S.last,t)===1)?S.streak+1:1;if(S.streak>S.best)S.best=S.streak;if(S.streak%7===0)S.freezes++;S.last=t}
+ S.xp+=n;S.days[t]=(S.days[t]||0)+n;S.weekXp+=n;
+ checkBadges();save();topBar();
+}
+const langsUsed=()=>Object.keys(LANGS).filter(l=>allUnits(l).some(u=>doneN(u)>0)).length;
+const BADGES=[
+ ['first','🌱','Primer paso',()=>S.xp>0],['s3','🔥','3 días seguidos',()=>S.best>=3],['s7','🌟','Semana perfecta',()=>S.best>=7],
+ ['s30','💎','30 días de racha',()=>S.best>=30],['s100','👑','100 días de racha',()=>S.best>=100],['s365','🏆','Un año entero',()=>S.best>=365],
+ ['xp500','✨','500 XP',()=>S.xp>=500],['xp5000','🚀','5000 XP',()=>S.xp>=5000],['w50','📚','50 palabras',()=>Object.keys(S.srs).length>=50],
+ ['w200','🧠','200 palabras',()=>Object.keys(S.srs).length>=200],['u5','🎓','5 unidades',()=>unitsDone()>=5],['poly','🌍','Políglota',()=>langsUsed()>=2],
+ ['song','🎵','Melómana',()=>S.songs.length>=1],['wr','✍️','Escritora (5 textos)',()=>S.diary.length>=5]
+];
+function checkBadges(){BADGES.forEach(b=>{if(!S.badges[b[0]]&&b[3]()){S.badges[b[0]]=today();setTimeout(()=>flash(b[1]+' Insignia: '+b[2]),400)}})}
+
+/* ========== SPACED REPETITION ========== */
+const INT=[0,1,3,7,14,30,60];
+function addSrs(lang,w,es,ex){const k=lang+'|'+w;if(!S.srs[k])S.srs[k]={lang,w,es,ex:ex||'',box:0,due:today()}}
+const dueList=lang=>Object.entries(S.srs).filter(([k,c])=>c.lang===lang&&c.due<=today());
+
+/* ========== NAV / TOP / ROUTER ========== */
+let V='path',UI={};const VIEWS={};let AFTER=null;
+function go(v,o){UI.stop=true;try{speechSynthesis.cancel()}catch(e){}V=v;if(o)Object.assign(UI,o);render()}
+function topBar(){
+ $('#pills').innerHTML=`<span class="pill">🔥 <b>${S.streak}</b></span><span class="pill">⭐ <b>${S.xp}</b></span><button class="iconbtn" data-a="go" data-v="teachers" title="Tus profes">🎓</button>`;
+ $('#langs').innerHTML=Object.keys(LANGS).map(l=>`<button class="chip ${l===S.lang?'on':''}" data-a="lang" data-l="${l}">${LANGS[l].flag} ${LANGS[l].name}</button>`).join('');
+ try{const on=document.querySelector('.chip.on');if(on&&on.scrollIntoView)on.scrollIntoView({inline:'center',block:'nearest'})}catch(e){}
+}
+function nav(){
+ const due=dueList(S.lang).length;const root={sess:'path',unit:'path',song:'songs',scene:'series',teachers:'league',diary:'league'}[V]||V;
+ const it=[['path','🗺️','Ruta'],['review','🧠','Repaso'],['songs','🎵','Música'],['series','🎬','Series'],['league','🏆','Ranking']];
+ $('#nav').innerHTML=it.map(i=>`<button class="${root===i[0]?'on':''}" data-a="go" data-v="${i[0]}"><span class="e">${i[1]}</span>${i[2]}${i[0]==='review'&&due?`<span class="dot">${due>99?'99+':due}</span>`:''}</button>`).join('');
+}
+function render(){
+ document.documentElement.style.setProperty('--ac',LANGS[S.lang].color);
+ document.querySelector('meta[name=theme-color]').setAttribute('content','#3B1F47');
+ topBar();nav();closeSheet();
+ const f=VIEWS[V]||VIEWS.path;$('#app').innerHTML=f();
+ window.scrollTo(0,0);
+ if(AFTER){const a=AFTER;AFTER=null;a()}
+}
+function openSheet(h){$('#layer').innerHTML=`<div class="scrim" data-a="closesheet"></div><div class="sheet">${h}</div>`}
+function closeSheet(){const l=$('#layer');if(l)l.innerHTML=''}
+
+/* ========== VIEWS: PATH & UNIT ========== */
+function vPath(){
+ const lang=S.lang,lv=S.lvl[lang],units=C[lang][lv]||[];
+ const tx=S.days[today()]||0,pct=Math.min(100,Math.round(tx/S.goal*100));
+ const T=TEACH[lang],tips=TIPS[lang],tip=tips[dayNum()%tips.length];
+ let next=-1;units.forEach((u,i)=>{if(next<0&&doneN(u)<6)next=i});
+ const tabs=LV.map(v=>{const us=C[lang][v]||[];const tot=us.length*6||1;const dn=us.reduce((a,u)=>a+doneN(u),0);return `<button class="lvtab ${v===lv?'on':''}" data-a="lvl" data-v="${v}">${v.toUpperCase()}<small>${Math.round(dn/tot*100)}%</small></button>`}).join('');
+ const nodes=units.map((u,i)=>{const n=doneN(u);return `<button class="node ${n===6?'done':''}" data-a="unit" data-id="${u.id}"><div class="bub" style="--p:${Math.round(n/6*100)}"><span>${n===6?'🏅':u.emoji}</span></div><div><div class="t">${esc(u.title)}</div><div class="muted small">${n}/6 actividades${i===next?' · <b style="color:var(--ac)">👉 sigue aquí</b>':''}</div></div></button>`}).join('');
+ return `<div class="card"><div class="hero"><div class="ring" style="--p:${pct}"><span>${tx}</span></div><div><h2>Meta de hoy</h2><div class="muted small">${tx>=S.goal?'¡Meta cumplida! 🎉':`${tx} / ${S.goal} XP · ${S.last===today()?'racha asegurada ✅':'practica para mantener tu racha'}`}</div></div></div>
+ <div class="row" style="margin-top:14px;align-items:flex-start"><div class="avatar">${T.icon}</div><div class="bubble"><b>${T.name}:</b> ${esc(tip)}</div></div></div>
+ <div class="lvtabs">${tabs}</div>
+ <h2 style="margin-top:18px">${LANGS[lang].flag} ${LANGS[lang].name} · ${lv.toUpperCase()} <span class="muted small" style="font-family:system-ui">${LVN[lv]}</span></h2>
+ <div class="path">${nodes||'<div class="card muted">Pronto habrá más unidades aquí.</div>'}</div>`;
+}
+VIEWS.path=vPath;
+
+function vUnit(){
+ const u=UM[UI.unit];if(!u)return vPath();const T=TEACH[u.lang];
+ const items=ACTS.map(a=>{const sc=S.done[u.id+':'+a[0]]||0;const ok=sc>=60;return `<button class="act ${ok?'ok':''}" data-a="act" data-t="${a[0]}">${ok?'<span class="ck">✓</span>':''}<div class="ic">${a[2]}</div><div class="nm">${a[1]}</div><small>${sc?sc+'%':'+XP'}</small></button>`}).join('');
+ return `<button class="back" data-a="go" data-v="path">← Ruta</button>
+ <h2>${u.emoji} ${esc(u.title)}</h2><span class="tag">${u.lvl.toUpperCase()}</span>
+ <div class="row" style="margin-top:14px;align-items:flex-start"><div class="avatar">${T.icon}</div><div class="bubble"><b>${T.name}:</b> En esta unidad aprenderás ${u.v.length} palabras clave y «${esc(u.g.t)}». ¡Hazlo en orden o salta a lo que quieras!</div></div>
+ <div class="acts">${items}</div>
+ <div class="card"><b>Palabras de la unidad</b><div class="chips">${u.v.map(x=>`<span class="chip2">${esc(x.w)}</span>`).join('')}</div></div>`;
+}
+VIEWS.unit=vUnit;
+
+/* ========== HANDLERS ========== */
+const H={
+ go:d=>go(d.v),
+ lang:d=>{S.lang=d.l;save();V='path';render()},
+ lvl:d=>{S.lvl[S.lang]=d.v;save();render()},
+ unit:d=>go('unit',{unit:d.id}),
+ say:(d,t)=>speak(d.t,d.l||S.lang,d.slow?0.55:null),
+ closesheet:closeSheet
+};
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const f=H[t.dataset.a];if(f)f(t.dataset,t,e)});
+</script>
+<script>'use strict';
+/* ========== SESIONES DE ACTIVIDADES ========== */
+let SS=null;
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function refresh(){$('#app').innerHTML=VIEWS[V]();if(AFTER){const a=AFTER;AFTER=null;a()}}
+const pools=u=>{const all=[];LV.forEach(l=>(C[u.lang][l]||[]).forEach(x=>all.push(...x.v)));return all};
+function mcq(q,correct,pool,o){
+ const d=shuffle(pool.filter((x,i,a)=>x!==correct&&a.indexOf(x)===i)).slice(0,3);
+ const opts=shuffle([correct].concat(d));
+ return Object.assign({t:'mcq',q,opts,a:opts.indexOf(correct)},o||{});
+}
+const sentencesOf=u=>u.v.filter(x=>x.ex).map(x=>({t:x.ex,es:x.exEs})).concat(u.l.filter(x=>x.es));
+
+/* ---- constructores ---- */
+function buildV(u){
+ const P=pools(u),es=P.map(x=>x.es),ws=P.map(x=>x.w),st=[];
+ u.v.forEach(x=>st.push({t:'card',x}));
+ shuffle(u.v).forEach(x=>st.push(mcq(`¿Qué significa «${x.w}»?`,x.es,es,{say:sayText(x)})));
+ shuffle(u.v).slice(0,4).forEach(x=>st.push(mcq(`¿Cómo se dice «${x.es}»?`,x.w,ws)));
+ if(!isJamo(u.v[0].w))shuffle(u.v).slice(0,4).forEach(x=>st.push(mcq('🎧 ¿Qué palabra escuchas?',x.w,ws,{say:sayText(x),auto:1})));
+ return st;
+}
+function buildG(u){
+ const st=[{t:'info',title:u.g.t,h:u.g.h}];
+ u.g.x.forEach(x=>{const ans=x[1][x[2]],sh=shuffle(x[1]);st.push({t:'mcq',q:x[0],opts:sh,a:sh.indexOf(ans),exp:x[3]})});
+ return st;
+}
+function buildL(u){
+ const S1=sentencesOf(u),poolEs=[];(C[u.lang][u.lvl]||[]).forEach(x=>sentencesOf(x).forEach(s=>poolEs.push(s.es)));
+ const st=[];
+ shuffle(S1).slice(0,4).forEach(s=>st.push(mcq('🎧 Escucha y elige el significado',s.es,poolEs,{say:s.t,auto:1})));
+ shuffle(S1).slice(0,4).forEach(s=>st.push({t:'type',q:'✍️ Dictado: escribe lo que escuchas',say:s.t,ans:s.t,es:s.es}));
+ return st;
+}
+function buildR(u){
+ const st=[{t:'read',title:u.r.t,s:u.r.s,es:u.r.es}];
+ u.r.q.forEach(x=>{const ans=x[1][x[2]],sh=shuffle(x[1]);st.push({t:'mcq',q:x[0],opts:sh,a:sh.indexOf(ans),exp:''})});
+ return st;
+}
+const buildW=u=>[{t:'write',p:u.w.p,m:u.w.m,k:u.w.k||[],n:Math.max(5,Math.min(u.w.n||12,Math.round(wc(u.w.m)*0.8)))}];
+function buildS(u){return shuffle(sentencesOf(u)).slice(0,6).map(s=>({t:'speak',tx:s.t,es:s.es}))}
+const BUILD={v:buildV,g:buildG,l:buildL,r:buildR,w:buildW,s:buildS};
+const BASE={v:20,g:20,l:20,r:15,w:25,s:20};
+
+function startSession(u,act){SS={u,act,steps:BUILD[act](u),i:0,ok:0,tot:0,ans:null,fin:false,res:null,played:-1,tr:false,rec:false,text:''};go('sess')}
+H.act=d=>startSession(UM[UI.unit],d.t);
+H.quit=()=>{try{speechSynthesis.cancel()}catch(e){}SS=null;go('unit')};
+H.back2unit=()=>{SS=null;go('unit')};
+H.retry=()=>startSession(SS.u,SS.act);
+
+/* ---- vista de sesión ---- */
+function vSess(){
+ if(!SS)return vPath();
+ if(SS.i>=SS.steps.length)return vFinish();
+ const st=SS.steps[SS.i],u=SS.u,T=TEACH[u.lang],pct=Math.round(SS.i/SS.steps.length*100);
+ let b='';
+ if(st.t==='card'){
+  const x=st.x,sx=sayText(x);
+  b=`<div class="card flash"><span class="tag">Palabra nueva</span><div class="w">${esc(x.w)}</div>${x.pr?`<div class="pr">${esc(x.pr)}</div>`:''}<div><button class="say" data-a="say" data-t="${esc(sx)}">🔊 Escuchar</button><button class="say" data-a="say" data-t="${esc(sx)}" data-slow="1">🐢 Lento</button></div><div class="es">${esc(x.es)}</div>${x.ex?`<div class="ex"><div style="font-size:1.1rem">${esc(x.ex)}</div><div class="muted small">${esc(x.exEs)}</div><button class="say" data-a="say" data-t="${esc(x.ex)}">🔊 Frase</button></div>`:''}</div><button class="btn" data-a="next">Siguiente</button>`;
+ }else if(st.t==='info'){
+  b=`<div class="card grammar"><div class="row" style="align-items:flex-start;margin-bottom:8px"><div class="avatar" style="flex:0 0 42px">${T.icon}</div><div class="bubble"><b>${T.name}</b> te explica:</div></div><h3>${esc(st.title)}</h3>${st.h}</div><button class="btn" data-a="next">¡Entendido! A practicar</button>`;
+ }else if(st.t==='mcq'){
+  const A=SS.ans;
+  if(st.auto&&SS.played!==SS.i&&A===null){SS.played=SS.i;AFTER=()=>setTimeout(()=>speak(st.say,u.lang),350)}
+  b=`<h2 class="q">${esc(st.q)}</h2>${st.say?`<button class="say big" data-a="say" data-t="${esc(st.say)}">🔊 Escuchar</button><button class="say" data-a="say" data-t="${esc(st.say)}" data-slow="1">🐢</button>`:''}`
+   +st.opts.map((o,i)=>`<button class="opt ${A!==null?(i===st.a?'good':(i===A?'bad':'')):''}" data-a="pick" data-i="${i}" ${A!==null?'disabled':''}>${esc(o)}</button>`).join('')
+   +(A!==null?`<div class="fb ${A===st.a?'good':'bad'}">${A===st.a?'✅ ¡Correcto!':'❌ Respuesta: <b>'+esc(st.opts[st.a])+'</b>'}${st.exp?'<br>'+esc(st.exp):''}</div><button class="btn" data-a="next">Continuar</button>`:'');
+ }else if(st.t==='type'){
+  const A=SS.ans;
+  if(A===null&&SS.played!==SS.i){SS.played=SS.i;AFTER=()=>setTimeout(()=>speak(st.say,u.lang),350)}
+  b=`<h2 class="q">${esc(st.q)}</h2><button class="say big" data-a="say" data-t="${esc(st.say)}">🔊 Escuchar</button><button class="say" data-a="say" data-t="${esc(st.say)}" data-slow="1">🐢 Lento</button><div style="margin-top:12px"><input id="ty" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Escribe lo que escuchas…" ${A?'disabled value="'+esc(A.val)+'"':''}></div>`
+   +(A?`<div class="fb ${A.res?'good':'bad'}">${A.res===2?'✅ ¡Perfecto!':A.res===1?'✅ Casi: cuida los acentos.':'❌ No exacto.'}<br><b>${esc(st.ans)}</b><br><span class="small">${esc(st.es)}</span></div><button class="btn" data-a="next">Continuar</button>`:`<button class="btn" data-a="check">Comprobar</button><button class="btn ghost" data-a="skip">No lo sé</button>`);
+ }else if(st.t==='read'){
+  b=`<span class="tag">Lectura</span><h2 style="margin-top:6px">${esc(st.title)}</h2><div class="card"><div class="read">${esc(st.s)}</div><div style="margin-top:10px"><button class="say" data-a="say" data-t="${esc(st.s)}">🔊 Escuchar texto</button><button class="say" data-a="say" data-t="${esc(st.s)}" data-slow="1">🐢 Lento</button><button class="say" data-a="tog">👁️ Traducción</button></div>${SS.tr?`<div class="muted read" style="margin-top:10px">${esc(st.es)}</div>`:''}</div><button class="btn" data-a="next">Responder preguntas</button>`;
+ }else if(st.t==='speak'){
+  const A=SS.ans;
+  b=`<span class="tag">Repite en voz alta</span><div class="card flash"><div class="w" style="font-size:1.6rem">${esc(st.tx)}</div><div class="muted">${esc(st.es)}</div><button class="say" data-a="say" data-t="${esc(st.tx)}">🔊 Escuchar</button><button class="say" data-a="say" data-t="${esc(st.tx)}" data-slow="1">🐢 Lento</button></div>`;
+  if(SR){
+   b+=`<button class="mic ${SS.rec?'rec':''}" data-a="mic">🎤</button><div class="muted small center">${SS.rec?'Escuchando…':'Toca el micrófono y di la frase'}</div>`;
+   if(A)b+=`<div class="fb ${A.score>=.7?'good':'bad'}">${A.score>=.7?'✅ ¡Muy bien!':'🔁 Casi. Inténtalo otra vez.'} (${Math.round(A.score*100)}%)<br><span class="small">Te entendí: «${esc(A.heard)}»</span></div>`;
+  }else{
+   b+=`<div class="fb good small">Tu navegador no reconoce voz. Escucha, repite en voz alta y califícate con honestidad:</div>`;
+   if(!A)b+=`<div class="row"><button class="btn alt" data-a="selfno">😅 Otra vez</button><button class="btn" data-a="selfok">✅ Lo dije bien</button></div>`;
+  }
+  b+=`<button class="btn" data-a="next" ${(A||st.best)?'':'disabled'}>Continuar</button>`;
+ }else if(st.t==='write'){
+  const A=SS.ans,txt=SS.text.toLowerCase().replace(/[’‘]/g,"'");
+  b=`<span class="tag">Escritura</span><h2 class="q">${esc(st.p)}</h2><div class="muted small">Frases clave (úsalas):</div><div class="chips">${st.k.map(k=>`<span class="chip2 ${A&&txt.includes(k.toLowerCase())?'hit':''}">${esc(k)}</span>`).join('')}</div><textarea id="wr" placeholder="Escribe aquí…" ${A?'disabled':''}>${esc(SS.text)}</textarea><div class="wc" id="wc">${wc(SS.text)} palabras · mínimo ${st.n}</div>`;
+  if(!A)b+=`<button class="btn" data-a="wsub">Revisar mi texto</button>`;
+  else b+=`<div class="card soft"><b>✨ Texto de ejemplo (modelo):</b><div class="read" style="margin-top:6px">${esc(st.m)}</div><button class="say" data-a="say" data-t="${esc(st.m)}">🔊 Escuchar modelo</button></div><div class="card"><b>Revisa tú misma:</b><div class="small" style="margin-top:6px">☐ ¿Usé las frases clave?<br>☐ ¿Revisé mayúsculas, puntuación y acentos?<br>☐ ¿Se entiende lo que quise decir?<br>☐ ¿Leí mi texto en voz alta?</div></div><div class="fb good">Guardado en tu diario de escritura 📓</div><button class="btn" data-a="next">Terminar</button>`;
+ }
+ return `<div class="sbar"><button class="x" data-a="quit">✕</button><div class="prog"><i style="width:${pct}%"></i></div></div>${b}`;
+}
+VIEWS.sess=vSess;
+const wc=t=>t.trim()?t.trim().split(/\s+/).length:0;
+
+const CHEER=['¡Excelente trabajo! Cada sesión te acerca más.','¡Eso es constancia! Sigue así.','Muy bien. Tu oído y tu memoria están creciendo.','¡Qué elegancia! Un paso más en tu camino.'];
+function finish(){
+ const u=SS.u,key=u.id+':'+SS.act;
+ const pct=SS.tot?Math.round(SS.ok/SS.tot*100):100,pass=pct>=60;
+ const first=(S.done[key]||0)<60;
+ let xp=Math.round((BASE[SS.act]+SS.ok*2)*(first?1:.5));if(!pass)xp=Math.max(3,Math.round(xp/3));
+ S.done[key]=Math.max(S.done[key]||0,pct);
+ if(SS.act==='v')u.v.forEach(x=>addSrs(u.lang,x.w,x.es,x.ex));
+ addXP(xp);
+ return{pct,pass,xp,msg:CHEER[Math.floor(Math.random()*CHEER.length)]};
+}
+function vFinish(){
+ if(!SS.fin){SS.fin=true;SS.res=finish()}
+ const r=SS.res,T=TEACH[SS.u.lang];
+ return `<div class="card center done"><div class="spark">✨</div><div class="big">${r.pass?'🎉':'💪'}</div><h2>${r.pass?'¡Muy bien!':'Casi lo tienes'}</h2><p style="font-size:1.2rem"><b>${r.pct}%</b> · <b style="color:var(--gold)">+${r.xp} XP</b></p><p class="muted">${T.name}: ${r.pass?r.msg:'Repítelo con calma; el error es parte de aprender.'}</p></div><button class="btn" data-a="back2unit">Continuar</button>${r.pass?'':'<button class="btn alt" data-a="retry">Repetir</button>'}`;
+}
+
+/* ---- handlers de sesión ---- */
+H.next=()=>{const st=SS.steps[SS.i];if(st.t==='speak'){SS.tot++;if((st.best||0)>=.7)SS.ok++}SS.i++;SS.ans=null;SS.rec=false;SS.tr=false;render()};
+H.pick=d=>{const st=SS.steps[SS.i];if(SS.ans!==null)return;const i=+d.i;SS.ans=i;SS.tot++;if(i===st.a)SS.ok++;refresh()};
+H.check=()=>{const st=SS.steps[SS.i];if(SS.ans)return;const v=($('#ty').value||'').trim();if(!v){flash('Escribe algo primero');return}const res=judge(v,st.ans,SS.u.lang);SS.ans={val:v,res};SS.tot++;if(res>0)SS.ok++;refresh()};
+H.skip=()=>{if(SS.ans)return;SS.ans={val:'',res:0};SS.tot++;refresh()};
+H.tog=()=>{SS.tr=!SS.tr;refresh()};
+H.selfok=()=>{SS.steps[SS.i].best=1;SS.ans={score:1,heard:''};refresh()};
+H.selfno=()=>{flash('Escucha otra vez y repite en voz alta 💪')};
+H.mic=()=>{
+ if(!SR||SS.rec)return;const st=SS.steps[SS.i];
+ try{speechSynthesis.cancel()}catch(e){}
+ const r=new SR();r.lang=LANGS[SS.u.lang].tts;r.interimResults=false;r.maxAlternatives=3;SS.rec=true;SS.ans=null;
+ r.onresult=e=>{const alts=[...e.results[0]].map(a=>a.transcript);const best=Math.max(...alts.map(a=>sim(a,st.tx)));SS.rec=false;st.best=Math.max(st.best||0,best);SS.ans={score:best,heard:alts[0]};refresh()};
+ r.onerror=e=>{SS.rec=false;flash('No pude escucharte ('+e.error+'). Revisa el permiso del micrófono.');refresh()};
+ r.onend=()=>{if(SS.rec){SS.rec=false;refresh()}};
+ try{r.start()}catch(e){SS.rec=false}
+ refresh();
+};
+H.wsub=()=>{
+ const st=SS.steps[SS.i];SS.text=$('#wr').value;const n=wc(SS.text);
+ if(n<st.n){flash(`Escribe al menos ${st.n} palabras (llevas ${n})`);return}
+ SS.ans={words:n};SS.tot=1;SS.ok=1;
+ S.diary.unshift({d:today(),lang:SS.u.lang,title:SS.u.title,text:SS.text,model:st.m});if(S.diary.length>60)S.diary.length=60;save();
+ refresh();
+};
+document.addEventListener('input',e=>{if(e.target.id==='wr'&&SS){SS.text=e.target.value;const st=SS.steps[SS.i];const el=$('#wc');if(el)el.textContent=wc(SS.text)+' palabras · mínimo '+st.n}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='ty')H.check()});
+
+/* ========== REPASO ESPACIADO ========== */
+function vReview(){
+ const lang=S.lang,R=UI.rv,total=Object.values(S.srs).filter(c=>c.lang===lang).length;
+ if(!R||R.lang!==lang){
+  const due=dueList(lang).length;
+  return `<h2 style="margin-top:16px">🧠 Repaso inteligente</h2>
+  <div class="card center"><div class="spark">${due?'📬':'🌟'}</div><h2>${due} palabra${due===1?'':'s'} para hoy</h2><p class="muted">${total} palabras guardadas en ${LANGS[lang].name}. El repaso espaciado te las muestra justo antes de olvidarlas.</p>
+  <button class="btn" data-a="rvstart" ${due?'':'disabled'}>Empezar repaso</button><button class="btn alt" data-a="rvfree" ${total?'':'disabled'}>Practicar 10 al azar</button></div>
+  ${total?'':'<div class="card muted">Aún no tienes palabras aquí. Completa «Vocabulario» en una unidad de la Ruta y se guardarán automáticamente.</div>'}`;
+ }
+ if(R.i>=R.q.length){
+  if(!R.fin){R.fin=true;if(R.n&&!R.free)addXP(R.n*2);else if(R.n){addXP(R.n)}}
+  return `<div class="card center done"><div class="spark">✨</div><div class="big">🌟</div><h2>¡Repaso completo!</h2><p>${R.n} palabras · <b style="color:var(--gold)">+${R.free?R.n:R.n*2} XP</b></p></div><button class="btn" data-a="rvend">Terminar</button>`;
+ }
+ const c=S.srs[R.q[R.i]],pct=Math.round(R.i/R.q.length*100),sx=sayText({w:c.w,ex:c.ex});
+ return `<div class="sbar"><button class="x" data-a="rvend">✕</button><div class="prog"><i style="width:${pct}%"></i></div></div>
+ <div class="card flash"><span class="tag">${R.show?'Respuesta':'¿Recuerdas?'}</span><div class="w">${esc(c.w)}</div><div><button class="say" data-a="say" data-l="${c.lang}" data-t="${esc(sx)}">🔊 Escuchar</button></div>
+ ${R.show?`<div class="es">${esc(c.es)}</div>${c.ex?`<div class="ex muted">${esc(c.ex)}</div>`:''}`:''}</div>
+ ${R.show?`<div class="row"><button class="btn alt" data-a="rvrate" data-r="0" style="padding:10px 2px">Otra vez</button><button class="btn alt" data-a="rvrate" data-r="1" style="padding:10px 2px">Difícil</button><button class="btn" data-a="rvrate" data-r="2" style="padding:10px 2px">Bien</button><button class="btn gold" data-a="rvrate" data-r="3" style="padding:10px 2px">Fácil</button></div>`:`<button class="btn" data-a="rvshow">Mostrar respuesta</button>`}`;
+}
+VIEWS.review=vReview;
+H.rvstart=()=>{UI.rv={lang:S.lang,q:shuffle(dueList(S.lang).map(e=>e[0])).slice(0,30),i:0,show:false,n:0,free:false};refresh()};
+H.rvfree=()=>{const ks=Object.keys(S.srs).filter(k=>S.srs[k].lang===S.lang);UI.rv={lang:S.lang,q:shuffle(ks).slice(0,10),i:0,show:false,n:0,free:true};refresh()};
+H.rvshow=()=>{UI.rv.show=true;refresh()};
+H.rvend=()=>{UI.rv=null;go('review')};
+H.rvrate=d=>{
+ const R=UI.rv,k=R.q[R.i],c=S.srs[k],r=+d.r;
+ if(!R.free){
+  if(r===0){c.box=0;c.due=today();R.q.push(k)}
+  else{c.box=Math.min(6,r===1?Math.max(1,c.box):c.box+(r===3?2:1));c.due=addDays(today(),r===1?1:INT[c.box])}
+ }
+ if(r>0)R.n++;R.i++;R.show=false;save();refresh();
+};
+</script>
+<script>'use strict';
+/* ========== MÚSICA ========== */
+const enc=encodeURIComponent;
+const parseLines=t=>t.trim().split('\n').map(l=>l.trim()).filter(Boolean);
+const songObj=s=>({...s,lines:typeof s.lines==='string'?s.lines.trim().split('\n').map(l=>{const p=l.split('|');return{t:p[0],es:p[1]||'',ro:p[2]||''}}):s.lines});
+function curSong(){const r=UI.song||{};if(r.src==='lib')return songObj(SONGS.find(s=>s.id===r.id));return S.songs.find(s=>s.id===r.id)}
+
+function vSongs(){
+ const lang=S.lang,tab=UI.stab||'lib',g=UI.genre||'';
+ const tabs=`<div class="tabs"><button class="${tab==='lib'?'on':''}" data-a="stab" data-v="lib">Biblioteca</button><button class="${tab==='mine'?'on':''}" data-a="stab" data-v="mine">Mis letras</button><button class="${tab==='disc'?'on':''}" data-a="stab" data-v="disc">Descubrir</button></div>`;
+ let b='';
+ if(tab==='lib'){
+  const list=SONGS.filter(s=>s.lang===lang&&(!g||s.genre===g));
+  b=`<div class="card soft small">🎶 Canciones <b>originales</b> creadas para esta academia, con traducción línea por línea. Las letras de canciones comerciales tienen derechos de autor: para esas usa «Mis letras» y pega la letra que encuentres en un sitio legal.</div>
+  <div class="chips"><button class="chip2 ${!g?'hit':''}" data-a="genre" data-g="">Todos</button>${GENRES.map(x=>`<button class="chip2 ${g===x?'hit':''}" data-a="genre" data-g="${x}">${x}</button>`).join('')}</div>`
+  +list.map(s=>`<button class="card song" data-a="song" data-src="lib" data-id="${s.id}"><span class="ic">🎵</span><div><b>${esc(s.title)}</b><div class="muted small">${esc(s.by)} · ${s.lvl.toUpperCase()}</div></div></button>`).join('');
+ }else if(tab==='mine'){
+  const mine=S.songs.filter(s=>s.lang===lang);
+  b=`<div class="card"><h3>➕ Agregar una canción</h3><p class="muted small">Busca la letra en un sitio legal (Genius, Musixmatch) y pégala aquí. Se guarda solo en tu teléfono. Si quieres, pega abajo la traducción línea por línea.</p>
+  <input type="text" id="sg-t" placeholder="Título de la canción" style="margin-bottom:8px"><input type="text" id="sg-a" placeholder="Artista" style="margin-bottom:8px">
+  <textarea id="sg-l" placeholder="Letra en ${LANGS[lang].name} (una línea por renglón)"></textarea><textarea id="sg-e" placeholder="Traducción al español (opcional, mismas líneas)" style="margin-top:8px"></textarea>
+  <button class="btn" data-a="songsave">Guardar canción</button></div>`
+  +mine.map(s=>`<div class="card song"><button class="song" style="flex:1" data-a="song" data-src="mine" data-id="${s.id}"><span class="ic">🎤</span><div><b>${esc(s.title)}</b><div class="muted small">${esc(s.by||'')} · ${s.lines.length} líneas</div></div></button><button class="x" data-a="songdel" data-id="${s.id}" title="Borrar">🗑️</button></div>`).join('')
+  +(mine.length?'':'<div class="card muted small center">Aún no has guardado canciones en este idioma.</div>');
+ }else{
+  const list=(DISCOVER[lang]||[]).filter(s=>!g||s.g.includes(g));
+  b=`<div class="card soft small">🎧 Canciones recomendadas para estudiar (solo títulos: abre la letra y el video en sitios oficiales). Luego pégala en «Mis letras» para estudiarla aquí.</div>`
+  +list.map(s=>`<div class="card"><div class="between"><b>${esc(s.t)}</b><span class="tag">${s.l}</span></div><div class="muted small">${esc(s.a)} · ${esc(s.g)}</div><div class="small" style="margin:6px 0">${esc(s.n)}</div><div class="row"><a class="btn alt" style="padding:8px;margin:4px 0" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${enc(s.t+' '+s.a)}">▶️ Escuchar</a><a class="btn alt" style="padding:8px;margin:4px 0" target="_blank" rel="noopener" href="https://genius.com/search?q=${enc(s.t+' '+s.a)}">📝 Letra</a></div></div>`).join('')
+  +`<div class="card"><h3>Método para aprender con canciones</h3><div class="small">1. Escucha sin leer.<br>2. Lee la letra con la traducción.<br>3. Toca las palabras nuevas y guárdalas al repaso.<br>4. Canta siguiendo la letra (modo karaoke).<br>5. Juega «Completa la letra» hasta acertar todo.</div></div>`;
+ }
+ return `<h2 style="margin-top:16px">🎵 Música en ${LANGS[lang].name}</h2>${tabs}${b}`;
+}
+VIEWS.songs=vSongs;
+H.stab=d=>{UI.stab=d.v;UI.genre='';refresh();nav()};
+H.genre=d=>{UI.genre=d.g;refresh()};
+H.song=d=>{UI.song={src:d.src,id:d.id};UI.cloze=false;UI.showTr=true;UI.czPaid=false;go('song')};
+H.songdel=d=>{if(confirm('¿Borrar esta canción?')){S.songs=S.songs.filter(s=>s.id!==d.id);save();refresh()}};
+H.songsave=()=>{
+ const t=$('#sg-t').value.trim(),a=$('#sg-a').value.trim(),l=parseLines($('#sg-l').value),e=parseLines($('#sg-e').value);
+ if(!t||l.length<2){flash('Pon el título y al menos 2 líneas de letra');return}
+ S.songs.push({id:'my'+Date.now(),lang:S.lang,title:t,by:a,lines:l.map((x,i)=>({t:x,es:e[i]||'',ro:''}))});
+ save();checkBadges();flash('🎵 Canción guardada');refresh();
+};
+
+function hiddenIdx(line){const toks=line.t.split(/\s+/);let bi=-1,bl=2;toks.forEach((w,i)=>{const c=w.replace(/[^\p{L}]/gu,'');if(c.length>bl){bl=c.length;bi=i}});return bi}
+function vSong(){
+ const s=curSong();if(!s)return vSongs();
+ const lang=s.lang,cl=UI.cloze,tr=UI.showTr;
+ const lines=s.lines.map((l,i)=>{
+  const toks=l.t.split(/\s+/),hi=cl?hiddenIdx(l):-1;
+  const html=toks.map((w,j)=>j===hi?`<input class="cz" data-i="${i}" data-j="${j}" type="text" autocomplete="off" autocapitalize="off" style="width:${Math.max(70,w.length*14)}px;padding:2px 6px;border-radius:8px;display:inline-block;font-size:1rem">`:`<span class="w" data-a="word" data-w="${esc(w.replace(/[^\p{L}'’]/gu,''))}" data-i="${i}">${esc(w)}</span>`).join(' ');
+  return `<div class="lyr" id="ly${i}"><div class="between"><div class="t">${html}</div><button class="say" style="margin:0" data-a="say" data-l="${lang}" data-t="${esc(l.t)}">🔊</button></div>${tr&&!cl?`${l.ro?`<div class="small" style="color:var(--ac)">${esc(l.ro)}</div>`:''}${l.es?`<div class="tr">${esc(l.es)}</div>`:''}`:''}</div>`;
+ }).join('');
+ return `<button class="back" data-a="go" data-v="songs">← Música</button>
+ <h2>${esc(s.title)}</h2><div class="muted small">${esc(s.by||'')}</div>
+ <div class="row" style="margin:10px 0"><button class="say" data-a="kara" style="justify-content:center">▶️ Karaoke</button><button class="say" data-a="trtog" style="justify-content:center">🌐 Traducción ${tr?'ON':'OFF'}</button></div>
+ <div class="row" style="margin-bottom:6px"><button class="say" data-a="clz" style="justify-content:center">${cl?'📖 Ver letra':'🧩 Completa la letra'}</button>${UI.song.src==='lib'?'<button class="say" data-a="savevoc" style="justify-content:center">🧠 Guardar vocabulario</button>':''}</div>
+ <div class="card">${lines}${cl?'<button class="btn" data-a="czcheck">Comprobar</button>':'<div class="muted small center" style="margin-top:8px">Toca cualquier palabra para escucharla, traducirla y guardarla.</div>'}</div>`;
+}
+VIEWS.song=vSong;
+H.trtog=()=>{UI.showTr=!UI.showTr;refresh()};
+H.clz=()=>{UI.cloze=!UI.cloze;UI.czPaid=false;refresh()};
+H.savevoc=()=>{const s=songObj(SONGS.find(x=>x.id===UI.song.id));let n=0;s.vocab.trim().split('\n').forEach(l=>{const p=l.split('|');addSrs(s.lang,p[0],p[1],'');n++});save();flash('🧠 '+n+' palabras guardadas en tu repaso')};
+H.kara=()=>{
+ const s=curSong();let i=0;UI.stop=false;
+ const clear=()=>document.querySelectorAll('.lyr.on').forEach(e=>e.classList.remove('on'));
+ const run=()=>{clear();if(UI.stop||i>=s.lines.length)return;const el=$('#ly'+i);if(el){el.classList.add('on');el.scrollIntoView({block:'center',behavior:'smooth'})}speak(s.lines[i].t,s.lang,S.rate,1,()=>{i++;setTimeout(run,300)})};
+ run();
+};
+H.czcheck=()=>{
+ const s=curSong();let ok=0,tot=0;
+ document.querySelectorAll('.cz').forEach(inp=>{const l=s.lines[+inp.dataset.i],w=l.t.split(/\s+/)[+inp.dataset.j];tot++;const r=judge(inp.value,w,s.lang);if(r)ok++;inp.style.borderColor=r?'var(--good)':'var(--bad)';inp.style.background=r?'#e6f6ee':'#fde8ea';if(!r)inp.value=w;inp.disabled=true});
+ flash(`Acertaste ${ok} de ${tot}`);
+ if(!UI.czPaid&&ok>0){UI.czPaid=true;addXP(ok*2)}
+};
+H.word=d=>{
+ const w=d.w;if(!w)return;const s=curSong(),lang=s.lang,line=s.lines[+d.i].t;
+ speak(w,lang);
+ const wr=lang==='ko'?'':`<a class="say" target="_blank" rel="noopener" href="https://www.wordreference.com/${lang}es/${enc(w)}">📘 WordReference</a>`;
+ openSheet(`<h2>${esc(w)}</h2><div class="muted small">${esc(line)}</div><div style="margin:8px 0"><button class="say" data-a="say" data-l="${lang}" data-t="${esc(w)}">🔊 Escuchar</button><a class="say" target="_blank" rel="noopener" href="https://translate.google.com/?sl=${lang}&tl=es&text=${enc(w)}&op=translate">🌐 Traducir</a>${wr}</div>
+ <input type="text" id="wsv" placeholder="Significado en español" autocomplete="off"><button class="btn" data-a="wsave" data-w="${esc(w)}" data-l="${lang}" data-x="${esc(line)}">🧠 Guardar en mi repaso</button>`);
+};
+H.wsave=d=>{const es=($('#wsv').value||'').trim();if(!es){flash('Escribe el significado para guardarla');return}addSrs(d.l,d.w,es,d.x);save();checkBadges();flash('🧠 Guardada en tu repaso');closeSheet()};
+
+/* ========== SERIES ========== */
+function vSeries(){
+ const lang=S.lang,tab=UI.rtab||'oido',sp=SPEECH[lang];
+ const tabs=`<div class="tabs"><button class="${tab==='oido'?'on':''}" data-a="rtab" data-v="oido">Oído real</button><button class="${tab==='esc'?'on':''}" data-a="rtab" data-v="esc">Escenas</button><button class="${tab==='met'?'on':''}" data-a="rtab" data-v="met">Método</button></div>`;
+ let b='';
+ if(tab==='oido'){
+  b=`<div class="card soft small">${esc(sp.intro)}</div>`+sp.items.trim().split('\n').map(l=>{const p=l.split('|');return `<div class="card"><div class="between"><div><div class="serif" style="font-size:1.5rem;color:var(--ac)">${esc(p[0])}</div><div class="muted small">se escribe: <b>${esc(p[1])}</b></div></div><button class="say" style="margin:0" data-a="say" data-t="${esc(p[2])}">🔊</button></div><div style="margin-top:8px">${esc(p[2])}</div><div class="muted small">${esc(p[3])}</div></div>`}).join('');
+ }else if(tab==='esc'){
+  b=SCENES.filter(s=>s.lang===lang).map(s=>`<button class="card song" data-a="scene" data-id="${s.id}"><span class="ic">🎬</span><div><b>${esc(s.title)}</b><div class="muted small">Nivel ${s.lvl} · escena con diálogo natural</div></div></button>`).join('');
+ }else{
+  const shows=(SHOWS[lang]||[]).map(x=>`<span class="chip2">${esc(x)}</span>`).join('');
+  b=`<div class="card"><h3>Método de 3 pasadas</h3><div class="small" style="margin-top:6px"><b>1. Entender la historia:</b> mira un episodio con subtítulos en español.<br><b>2. Atrapar el idioma:</b> repítelo con subtítulos en ${LANGS[lang].name}; pausa y anota 5 frases.<br><b>3. Entrenar el oído:</b> vuélvelo a ver sin subtítulos y repite en voz alta imitando la entonación (shadowing).</div></div>
+  <div class="card"><h3>Series para tu nivel</h3><div class="chips">${shows}</div><div class="muted small">Tip: las extensiones como Language Reactor te muestran dos subtítulos a la vez en Netflix/YouTube desde el computador.</div></div>
+  <div class="card"><h3>📝 Guardar frase de una serie</h3><input type="text" id="ph-w" placeholder="Frase en ${LANGS[lang].name}" style="margin-bottom:8px"><input type="text" id="ph-e" placeholder="Significado en español"><button class="btn" data-a="phsave">Guardar en mi repaso</button></div>`;
+ }
+ return `<h2 style="margin-top:16px">🎬 Entiende series en ${LANGS[lang].name}</h2>${tabs}${b}`;
+}
+VIEWS.series=vSeries;
+H.rtab=d=>{UI.rtab=d.v;refresh()};
+H.phsave=()=>{const w=$('#ph-w').value.trim(),e=$('#ph-e').value.trim();if(!w||!e){flash('Escribe la frase y su significado');return}addSrs(S.lang,w,e,'');save();checkBadges();$('#ph-w').value='';$('#ph-e').value='';flash('🧠 Frase guardada')};
+H.scene=d=>{UI.scene=d.id;UI.smode=0;UI.sq={};go('scene')};
+const parseScene=l=>{const p=l.split('|'),m=p[0].match(/^([^:]+):\s*(.*)$/);return{who:m?m[1]:'',t:m?m[2]:p[0],es:p[1]||''}};
+function vScene(){
+ const sc=SCENES.find(s=>s.id===UI.scene);if(!sc)return vSeries();
+ const lines=sc.lines.trim().split('\n').map(parseScene),mode=UI.smode||0;
+ const modes=['Sin subtítulos','En '+LANGS[sc.lang].name,'En español'];
+ const ls=lines.map((l,i)=>`<div class="lyr" id="ly${i}"><b style="color:var(--ac)">${esc(l.who)}</b> ${mode===1?esc(l.t):mode===2?esc(l.es):'<span class="muted">· · ·</span>'}</div>`).join('');
+ const qs=sc.q.map((q,qi)=>{const a=UI.sq[qi];return `<div class="card"><b>${esc(q[0])}</b>`+q[1].map((o,i)=>`<button class="opt ${a!==undefined?(i===q[2]?'good':(i===a?'bad':'')):''}" data-a="sq" data-q="${qi}" data-i="${i}" ${a!==undefined?'disabled':''}>${esc(o)}</button>`).join('')+'</div>'}).join('');
+ return `<button class="back" data-a="go" data-v="series">← Series</button><h2>🎬 ${esc(sc.title)}</h2><span class="tag">Nivel ${sc.lvl}</span>
+ <div class="card soft small" style="margin-top:12px"><b>Paso 1:</b> escucha sin subtítulos. <b>Paso 2:</b> activa el idioma original. <b>Paso 3:</b> mira la traducción y repite en voz alta.</div>
+ <button class="btn" data-a="play">▶️ Reproducir escena</button>
+ <div class="tabs">${modes.map((m,i)=>`<button class="${mode===i?'on':''}" data-a="smode" data-v="${i}">${m}</button>`).join('')}</div>
+ <div class="card">${ls}</div><h3>Comprueba que entendiste</h3>${qs}`;
+}
+VIEWS.scene=vScene;
+H.smode=d=>{UI.smode=+d.v;refresh()};
+H.sq=d=>{const sc=SCENES.find(s=>s.id===UI.scene),q=sc.q[+d.q];UI.sq[+d.q]=+d.i;if(+d.i===q[2])addXP(3);refresh()};
+H.play=()=>{
+ const sc=SCENES.find(s=>s.id===UI.scene),lines=sc.lines.trim().split('\n').map(parseScene);let i=0;UI.stop=false;const who={};
+ const run=()=>{document.querySelectorAll('.lyr.on').forEach(e=>e.classList.remove('on'));if(UI.stop||i>=lines.length)return;const l=lines[i];if(!(l.who in who))who[l.who]=Object.keys(who).length%2?0.82:1.18;const el=$('#ly'+i);if(el)el.classList.add('on');speak(l.t,sc.lang,S.rate+0.1,who[l.who],()=>{i++;setTimeout(run,450)})};
+ run();
+};
+
+/* ========== RANKING / PERFIL ========== */
+let DEFER=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();DEFER=e});
+function vLeague(){
+ const rows=standings(weekProg(),S.weekXp,S.tier,S.week),me=rows.findIndex(r=>r.me)+1;
+ const t=today(),start=addDays(weekStart(),-28);
+ let heat='';for(let i=0;i<35;i++){const d=addDays(start,i);if(d>t){heat+='<i style="opacity:.25"></i>';continue}const x=S.days[d]||0;heat+=`<i class="${x>=S.goal?'l3':x>=S.goal/2?'l2':x>0?'l1':''} ${d===t?'t':''}" title="${d}: ${x} XP"></i>`}
+ const dl=7-((new Date().getDay()+6)%7);
+ const words=Object.keys(S.srs).length;
+ return `<h2 style="margin-top:16px">${TIERE[S.tier]} Liga ${TIERS[S.tier]}</h2><div class="muted small">Los 3 primeros suben de liga · terminan en ${dl} día${dl===1?'':'s'}${S.lastRank&&S.lastRank.msg?' · '+esc(S.lastRank.msg):''}</div>
+ <div class="card">${rows.map((r,i)=>`<div class="lrow ${r.me?'me':''}"><span class="rk">${i+1}</span><span class="nm">${r.me?'⭐ ':''}${esc(r.n)}</span><span>${r.xp} XP</span></div>`).join('')}</div>
+ <div class="muted small center">Compites contra estudiantes simulados: el objetivo es superarte a ti misma cada semana 💜</div>
+ <h2 style="margin-top:20px">Tu racha</h2>
+ <div class="stats"><div class="stat"><b>🔥 ${S.streak}</b><span>racha actual</span></div><div class="stat"><b>${S.best}</b><span>mejor racha</span></div><div class="stat"><b>❄️ ${S.freezes}</b><span>congeladores</span></div><div class="stat"><b>${S.xp}</b><span>XP total</span></div><div class="stat"><b>${words}</b><span>palabras</span></div><div class="stat"><b>${unitsDone()}</b><span>unidades</span></div></div>
+ <div class="card"><div class="heat">${heat}</div><div class="muted small" style="margin-top:8px">Últimas 5 semanas. Cada 7 días de racha ganas un ❄️ que protege un día que falles.</div></div>
+ <h2>Insignias</h2><div class="badges">${BADGES.map(b=>`<div class="badge ${S.badges[b[0]]?'':'off'}"><span class="e">${b[1]}</span>${b[2]}</div>`).join('')}</div>
+ <div class="row" style="margin-top:18px"><button class="btn alt" data-a="go" data-v="diary">📓 Mi diario</button><button class="btn alt" data-a="go" data-v="teachers">🎓 Mis profes</button></div>
+ <h2 style="margin-top:14px">Ajustes</h2>
+ <div class="card"><label class="small muted">Meta diaria</label><select id="goal">${[15,30,50,100].map(x=>`<option ${S.goal===x?'selected':''} value="${x}">${x} XP</option>`).join('')}</select>
+ <label class="small muted" style="display:block;margin-top:10px">Velocidad de la voz</label><select id="rate">${[[.65,'Lenta'],[.85,'Normal'],[1,'Rápida']].map(x=>`<option ${S.rate===x[0]?'selected':''} value="${x[0]}">${x[1]}</option>`).join('')}</select>
+ <button class="btn alt" data-a="export">💾 Descargar copia de mi progreso</button><label class="btn ghost" style="cursor:pointer">📥 Restaurar copia<input type="file" id="imp" accept=".json" style="display:none"></label>
+ ${DEFER?'<button class="btn gold" data-a="install">📲 Instalar app</button>':''}
+ <div class="muted small">Tu progreso vive en este dispositivo. Descarga una copia de vez en cuando para no perderlo si cambias de teléfono.</div>
+ <button class="btn ghost" data-a="reset" style="color:var(--bad)">Borrar todo mi progreso</button></div>`;
+}
+VIEWS.league=vLeague;
+document.addEventListener('change',e=>{
+ if(e.target.id==='goal'){S.goal=+e.target.value;save();flash('Meta actualizada')}
+ if(e.target.id==='rate'){S.rate=+e.target.value;save();speak('Hello, bonjour, ciao',S.lang)}
+ if(e.target.id==='imp'){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);S=Object.assign({},DEF,o);S.lvl=Object.assign({},DEF.lvl,S.lvl||{});save();boot();flash('✅ Progreso restaurado');render()}catch(x){flash('Archivo no válido')}};r.readAsText(f)}
+});
+H.export=()=>{const b=new Blob([JSON.stringify(S)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='mi-academia-respaldo-'+today()+'.json';document.body.appendChild(a);a.click();a.remove();flash('💾 Copia descargada')};
+H.install=async()=>{if(DEFER){DEFER.prompt();DEFER=null;refresh()}};
+H.reset=()=>{if(confirm('¿Seguro? Se borrará todo tu progreso.')&&confirm('Última confirmación: no se puede deshacer.')){S=JSON.parse(JSON.stringify(DEF));S.lvl=Object.assign({},DEF.lvl);try{localStorage.removeItem(KEY)}catch(e){}boot();render()}};
+
+function vDiary(){
+ return `<button class="back" data-a="go" data-v="league">← Ranking</button><h2>📓 Mi diario de escritura</h2>`
+ +(S.diary.length?S.diary.map(d=>`<div class="card"><div class="between"><b>${esc(d.title)}</b><span class="tag">${LANGS[d.lang].flag} ${d.d}</span></div><div class="read small" style="margin-top:8px">${esc(d.text)}</div></div>`).join(''):'<div class="card muted center">Aquí aparecerán los textos que escribas en las actividades de Escritura.</div>');
+}
+VIEWS.diary=vDiary;
+
+function vTeachers(){
+ return `<button class="back" data-a="go" data-v="league">← Ranking</button><h2>🎓 Tus profes</h2><div class="muted small">Cada idioma tiene su profe virtual que te explica la gramática y te da un consejo del día.</div>`
+ +Object.keys(LANGS).map(l=>{const T=TEACH[l],tips=TIPS[l];return `<div class="card" style="border-left:6px solid ${LANGS[l].color}"><div class="row" style="align-items:flex-start"><div class="avatar" style="background:${LANGS[l].color};flex:0 0 42px">${T.icon}</div><div><b>${T.name}</b><div class="muted small">${T.role}</div></div></div><p class="small">${T.bio}</p><div class="bubble" style="--ac:${LANGS[l].color}">💡 ${esc(tips[dayNum()%tips.length])}</div>${l!==S.lang?`<button class="btn alt" data-a="lang" data-l="${l}">Estudiar ${LANGS[l].name}</button>`:''}</div>`}).join('');
+}
+VIEWS.teachers=vTeachers;
+</script>
+<script>
+boot();render();
+</script>
+</body>
+</html>
